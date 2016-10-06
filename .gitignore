@@ -1,2 +1,4 @@
 nbproject
-image/model/IMG/
+image/model/IMG/*
+*.jpg
+~/mi3/image/model/IMG/
