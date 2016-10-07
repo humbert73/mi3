@@ -45,13 +45,15 @@
                     # Mise en place du menu
                     $newImg           = $imgDAO->getFirstImage(); // Pre-calcule la première image     
                     $newImgId         = $newImg->getId(); # Change l'etat pour indiquer que cette image est la nouvelle
+                    $random_image     = $imgDAO->getRandomImage();
+                    $random_image_id  = $random_image->getId();
                     $menu['Home']     = "index.php";
                     $menu['A propos'] = "aPropos.php";
                     $menu['First']    = "viewPhoto.php?imgId=$newImgId&size=$size";
-                    $menu['Random']   = "nonRealise.php"; # Pre-calcule une image au hasard
+                    $menu['Random']   = "viewPhoto.php?imgId=$random_image_id&size=$size"; # Pre-calcule une image au hasard
                     $menu['More']     = "viewPhotoMatrix.php?imgId=$imgId"; # Pour afficher plus d'image passe à une autre page
                     $menu['Zoom +']   = "zoom.php?zoom=1.25&imgId=$imgId&size=$size"; // Demande à calculer un zoom sur l'image
-                    $menu['Zoom -']   = "nonRealise.php"; // Demande à calculer un zoom sur l'image
+                    $menu['Zoom -']   = "zoom.php?zoom=0.75&imgId=$imgId&size=$size"; // Demande à calculer un zoom sur l'image
                     // Affichage du menu
                     foreach ($menu as $item => $act) {
                         print "<li><a href=\"$act\">$item</a></li>\n";
@@ -65,10 +67,12 @@
                 # Mise en place des deux boutons
                 print "<p>\n";
                 // pre-calcul de l'image précedente
-                print "<a href=\"nonRealise.php\">Prev</a> ";
+                $newImg   = $imgDAO->getPrevImage($img);
+                $newImgId = $newImg->getId(); 
+                print "<a href=\"viewPhoto.php?imgId=$newImgId&size=$size\">Prev</a>\n";
                 // pre-calcul de l'image suivante
-                $newImg = $imgDAO->getNextImage($img);
-                $newImgId=$newImg->getId(); 
+                $newImg   = $imgDAO->getNextImage($img);
+                $newImgId = $newImg->getId(); 
                 print "<a href=\"viewPhoto.php?imgId=$newImgId&size=$size\">Next</a>\n";
                 print "</p>\n";
                 # Affiche l'image avec une reaction au click

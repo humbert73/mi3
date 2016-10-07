@@ -65,7 +65,8 @@
 
         # Retourne une image au hazard
         function getRandomImage() {
-            trigger_error("Non réalisé");		
+            $imgId = rand(1, $this->size());
+            return $this->getImage($imgId);	
         }
 
         # Retourne l'objet de la premiere image
@@ -84,13 +85,22 @@
 
         # Retourne l'image précédente d'une image
         function getPrevImage(image $img) {
-            trigger_error("Non réalisé");
+            $id = $img->getId();
+            if ($id > 1) {
+                    $img = $this->getImage($id-1);
+            }
+            return $img;
         }
 
         # saute en avant ou en arrière de $nb images
         # Retourne la nouvelle image
-        function jumpToImage(image $img,$nb) {
-            trigger_error("Non réalisé");
+        function jumpToImage(image $img, $nb) {
+            $id = $img->getId();
+            $nextId = $id+$nb;
+            if ($nextId >= 1 && $nextId <= $this->size()) {
+                $img = $this->getImage($nextId);
+            }
+            return $img;
         }
 
         # Retourne la liste des images consécutives à partir d'une image
@@ -118,7 +128,7 @@
             $imgDAO = new ImageDAO();
             echo "<p>Creation de l'objet ImageDAO.</p>\n";
             echo "<p>La base contient ".$imgDAO->size()." images.</p>\n";
-            $img = $imgDAO->getFirstImage("");
+            $img = $imgDAO->getFirstImage();
             echo "La premiere image est : ".$img->getURL()."</p>\n";
             # Affiche l'image
             echo "<img src=\"".$img->getURL()."\"/>\n";

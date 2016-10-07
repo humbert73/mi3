@@ -63,6 +63,9 @@
                     }
 
                     # Mise en place du menu
+                    
+                    $random_image    = $imgDAO->getRandomImage();
+                    $random_image_id = $random_image->getId();
                     $menu['Home']="index.php";
                     $menu['A propos']="aPropos.php";
                     // Pre-calcule la première image
@@ -71,12 +74,13 @@
                     $newImgId=$newImg->getId(); 
                     $menu['First']="viewPhotoMatrix.php?imgId=$newImgId&nbImg=$nbImg";
                     # Pre-calcule une image au hasard
-                    $menu['Random']="nonRealise.php";
+                    $menu['Random']= "viewPhoto.php?imgId=$random_image_id&size=$size";
                     # Pré-calcule le nouveau nombre d'images à afficher si on en veux plus
-                    $newNbImg = $nbImg * 2;
-                    $menu['More']="viewPhotoMatrix.php?imgId=$imgId&nbImg=$newNbImg";  
+                    $newMoreNbImg = $nbImg * 2;
+                    $newLessNbImg = $nbImg / 2;
+                    $menu['More']="viewPhotoMatrix.php?imgId=$imgId&nbImg=$newMoreNbImg";  
                     # Pré-calcule le nouveau nombre d'images à afficher si on en veux moins
-                    $menu['Less']="nonRealise.php";
+                    $menu['Less']="viewPhotoMatrix.php?imgId=$imgId&nbImg=$newLessNbImg";
                     // Affichage du menu
                     foreach ($menu as $item => $act) {
                             print "<li><a href=\"$act\">$item</a></li>\n";
@@ -90,9 +94,13 @@
                 # Mise en place des deux boutons
                 print "<p>\n";
                 // pre-calcul de la page d'images précedente
-                print "<a href=\"nonRealise.php\">Prev</a> ";
+                $newPrevImg = $imgDAO->jumpToImage($img, -$nbImg);
+                $newPrevImgId = $newPrevImg->getId();
+                print "<a href=\"viewPhotoMatrix.php?imgId=$newPrevImgId&nbImg=$nbImg\">Prev</a> ";
                 // pre-calcul de la page d'images suivante
-                print "<a href=\"nonRealise.php\">Next</a>\n";
+                $newNextImg   = $imgDAO->jumpToImage($img, $nbImg);
+                $newNextImgId = $newNextImg->getId();
+                print "<a href=\"viewPhotoMatrix.php?imgId=$newNextImgId&nbImg=$nbImg\">Next</a>\n";
                 print "</p>\n";
                 # Affiche de la matrice d'image avec une reaction au click
                 print "<a href=\"zoom.php?zoom=1.25&imgId=$newImgId&size=$size\">\n";
