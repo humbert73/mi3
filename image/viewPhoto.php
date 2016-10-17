@@ -15,8 +15,8 @@
             <ul>
                 <?php 
                     # Utilisation du modèle
-                    require_once("model/image.php");
-                    require_once("model/imageDAO.php");
+                    require_once("Model/image.php");
+                    require_once("Model/imageDAO.php");
                     // Débute l'acces aux images
                     $imgDAO = new ImageDAO();
 

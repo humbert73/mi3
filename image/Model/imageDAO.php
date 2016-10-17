@@ -7,9 +7,9 @@
         # A MODIFIER EN FONCTION DE VOTRE INSTALLATION
         # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         # Chemin LOCAL où se trouvent les images
-        private $path="model/IMG";
+        private $path="Model/IMG";
         # Chemin URL où se trouvent les images
-        const urlPath="http://localhost/image/model/IMG";
+        const urlPath="http://localhost/image/Model/IMG";
 
         # Tableau pour stocker tous les chemins des images
         private $imgEntry;
