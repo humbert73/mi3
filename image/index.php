@@ -1,40 +1,38 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"  xml:lang="fr" >
-    <head>
-        <title>Site SIL3</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link rel="stylesheet" type="text/css" href="style.css" media="screen" title="Normal" />
-    </head>
-    <body>
-        <div id="entete">
-            <h1>Site SIL3</h1>
-        </div>
+<?php
 
-        <div id="menu">		
-            <h3>Menu</h3>
-            <ul>
-                <?php # Mise en place du menu par un parcours de la table associative
-                    $menu['Home']        = "index.php";
-                    $menu['A propos']    = "aPropos.php";
-                    $menu['Voir photos'] = "viewPhoto.php";
+if (isset($_GET["controller"])) {
+    $controller_to_run = $_GET["controller"];
+} else {
+    $controller_to_run = "Home";
+}
 
-                    foreach ($menu as $item => $act) {
-                        print "<li><a href=\"$act\">$item</a></li>\n";
-                    }
-                ?>
-            </ul>
-        </div>
+if (isset($_GET["action"])) {
+    $action = $_GET["action"];
+} else {
+    $action = "display";
+}
 
-        <div id="corps">
-            <h1> Bonjour !</h1>
-            <p> Cette application vous permet de manipuler des photos <br/>
-            Vous pouvez : naviguer, partager, classer en album </p> 
-        </div>
+$controller_file_name = "Controller/".$controller_to_run.'.php';
 
-        <div id="pied_de_page"></div>	   	   	
-    </body>
-</html>
+if (file_exists($controller_file_name)){
+    require_once($controller_file_name);
 
+    $controller_class_name = $controller_to_run;
+    if (class_exists($controller_class_name)) {
+        $controller = new $controller_class_name();
 
-
-
+        if (method_exists($controller, $action)) {
+            $controller->$action();
+        } else {
+            die("<b>### Erreur : la methode '$action' du controleur '$controller_class_name' du fichier '$controller_file_name' n'existe pas</b>
+            </br>Conseil : verifiez l'orthographe du nom de cette methode dans le fichier $controller_file_name.");
+        }
+    } else {
+        die("<b>### Erreur : la classe du controleur '$controller_class_name' du fichier $controller_file_name n'existe pas</b>
+          </br>Conseil : verifiez l'orthographe du nom de cette classe dans le fichier $controller_file_name.");
+    }
+} else{
+    die("<b>### Erreur : le fichier $controller_file_name est absent</b>
+        </br>Conseil : il faut creer ce fichier, verifier son nom ou verifier le lien du bouton
+        en particulier la valeur de la variable 'controller' dans l'URL.");
+}

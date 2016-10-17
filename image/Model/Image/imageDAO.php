@@ -1,5 +1,7 @@
 <?php
+
 require_once("image.php");
+require_once("ImageFactory.php");
 
 # Le 'Data Access Object' d'un ensemble images
 class ImageDAO
@@ -15,6 +17,8 @@ class ImageDAO
 
     # Tableau pour stocker tous les chemins des images
     private $imgEntry;
+
+    private $image_factory;
 
     # Lecture récursive d'un répertoire d'images
     # Ce ne sont pas des objets qui sont stockes mais juste
@@ -44,7 +48,9 @@ class ImageDAO
 
     function __construct()
     {
-        $dsn  = 'sqlite:/home/moreauhu/sites/mi3/image/DB/image.db'; // Data source name
+        $this->image_factory = new ImageFactory();
+
+        $dsn  = 'sqlite:DB/image.db'; // Data source name
         $user = ''; // Utilisateur
         $pass = ''; // Mot de passe
         try {
@@ -68,17 +74,12 @@ class ImageDAO
         if ($res) {
             $row = $this->getFirstRow($res);
 
-            return $this->createImage($row);
+            return $this->image_factory->createImage($row);
         } else {
             print "Error in getImage. id=" . $id . "<br/>";
             $err = $this->db->errorInfo();
             print $err[2] . "<br/>";
         }
-    }
-
-    function createImage($row)
-    {
-        return new Image($row['id'], self::urlPath . $row['path']);
     }
 
     private function getFirstRow($res)

@@ -4,7 +4,7 @@
     <head>
         <title>Site SIL3</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link rel="stylesheet" type="text/css" href="style.css" media="screen" title="Normal" />
+        <link rel="stylesheet" type="text/css" href="View/css/style.css" media="screen" title="Normal" />
     </head>
     <body>
         <div id="entete">
@@ -66,8 +66,8 @@
                     
                     $random_image    = $imgDAO->getRandomImage();
                     $random_image_id = $random_image->getId();
-                    $menu['Home']="index.php";
-                    $menu['A propos']="aPropos.php";
+                    $menu['Home']="viewHome.php";
+                    $menu['A propos']="viewAPropos.php";
                     // Pre-calcule la première image
                     $newImg = $imgDAO->getFirstImage();     
                     # Change l'etat pour indiquer que cette image est la nouvelle
