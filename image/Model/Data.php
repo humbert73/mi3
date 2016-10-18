@@ -11,5 +11,7 @@ class Data
     public $menu;
     public $content;
     public $image_url;
+    public $image_id;
     public $size = 480;
+    public $zoom = 1;
 }

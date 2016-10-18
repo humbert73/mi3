@@ -1,4 +1,5 @@
 nbproject
+*.xml
 image/model/IMG/*
 *.jpg
 ~/mi3/image/model/IMG/
