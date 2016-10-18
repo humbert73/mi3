@@ -32,13 +32,14 @@
       <file leaf-file-name="imageDAO.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Model/Image/imageDAO.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="106" column="28" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="28" />
+            <state relative-caret-position="180">
+              <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
               <folding>
-                <marker date="1476777661518" expanded="true" signature="2129:2155" ph="SELECT count... image" />
-                <marker date="1476777661518" expanded="true" signature="2509:2515" ph="SELECT name,... fruit" />
-                <marker date="1476777661518" expanded="true" signature="2509:2539" ph="SELECT * FRO... image" />
-                <marker date="1476777661518" expanded="true" signature="2509:2540" ph="SELECT * FRO... image" />
+                <marker date="1476778753113" expanded="true" signature="2129:2153" ph="SELECT count... " />
+                <marker date="1476778753113" expanded="true" signature="2129:2163" ph="SELECT count... " />
+                <marker date="1476778753113" expanded="true" signature="2427:2433" ph="SELECT name,... fruit" />
+                <marker date="1476778753113" expanded="true" signature="2427:2457" ph="SELECT * FRO... image" />
+                <marker date="1476778753113" expanded="true" signature="2427:2458" ph="SELECT * FRO... image" />
               </folding>
             </state>
           </provider>
@@ -129,7 +130,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="108">
               <caret line="6" column="96" selection-start-line="6" selection-start-column="96" selection-end-line="6" selection-end-column="114" />
-              <folding />
+              <folding>
+                <marker date="1476775102832" expanded="true" signature="2:175" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -171,10 +174,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="87" />
-    <option name="y" value="112" />
-    <option name="width" value="1279" />
-    <option name="height" value="652" />
+    <option name="x" value="57" />
+    <option name="y" value="21" />
+    <option name="width" value="1309" />
+    <option name="height" value="747" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -393,22 +396,22 @@
       <workItem from="1476684312193" duration="13393000" />
       <workItem from="1476700656650" duration="1840000" />
       <workItem from="1476720108155" duration="3320000" />
-      <workItem from="1476772047109" duration="5893000" />
+      <workItem from="1476772047109" duration="6725000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28779000" />
+    <option name="totallyTimeSpent" value="29611000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="87" y="112" width="1279" height="652" extended-state="0" />
+    <frame x="57" y="21" width="1309" height="747" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1876466" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18334606" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32971296" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.328152" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28189912" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -444,10 +447,11 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1476777661518" expanded="true" signature="2129:2155" ph="SELECT count... image" />
-            <marker date="1476777661518" expanded="true" signature="2509:2515" ph="SELECT name,... fruit" />
-            <marker date="1476777661518" expanded="true" signature="2509:2539" ph="SELECT * FRO... image" />
-            <marker date="1476777661518" expanded="true" signature="2509:2540" ph="SELECT * FRO... image" />
+            <marker date="1476778753113" expanded="true" signature="2129:2153" ph="SELECT count... " />
+            <marker date="1476778753113" expanded="true" signature="2129:2163" ph="SELECT count... " />
+            <marker date="1476778753113" expanded="true" signature="2427:2433" ph="SELECT name,... fruit" />
+            <marker date="1476778753113" expanded="true" signature="2427:2457" ph="SELECT * FRO... image" />
+            <marker date="1476778753113" expanded="true" signature="2427:2458" ph="SELECT * FRO... image" />
           </folding>
         </state>
       </provider>
@@ -505,10 +509,11 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1476777661518" expanded="true" signature="2129:2155" ph="SELECT count... image" />
-            <marker date="1476777661518" expanded="true" signature="2509:2515" ph="SELECT name,... fruit" />
-            <marker date="1476777661518" expanded="true" signature="2509:2539" ph="SELECT * FRO... image" />
-            <marker date="1476777661518" expanded="true" signature="2509:2540" ph="SELECT * FRO... image" />
+            <marker date="1476778753113" expanded="true" signature="2129:2153" ph="SELECT count... " />
+            <marker date="1476778753113" expanded="true" signature="2129:2163" ph="SELECT count... " />
+            <marker date="1476778753113" expanded="true" signature="2427:2433" ph="SELECT name,... fruit" />
+            <marker date="1476778753113" expanded="true" signature="2427:2457" ph="SELECT * FRO... image" />
+            <marker date="1476778753113" expanded="true" signature="2427:2458" ph="SELECT * FRO... image" />
           </folding>
         </state>
       </provider>
@@ -581,10 +586,11 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1476777661518" expanded="true" signature="2129:2155" ph="SELECT count... image" />
-            <marker date="1476777661518" expanded="true" signature="2509:2515" ph="SELECT name,... fruit" />
-            <marker date="1476777661518" expanded="true" signature="2509:2539" ph="SELECT * FRO... image" />
-            <marker date="1476777661518" expanded="true" signature="2509:2540" ph="SELECT * FRO... image" />
+            <marker date="1476778753113" expanded="true" signature="2129:2153" ph="SELECT count... " />
+            <marker date="1476778753113" expanded="true" signature="2129:2163" ph="SELECT count... " />
+            <marker date="1476778753113" expanded="true" signature="2427:2433" ph="SELECT name,... fruit" />
+            <marker date="1476778753113" expanded="true" signature="2427:2457" ph="SELECT * FRO... image" />
+            <marker date="1476778753113" expanded="true" signature="2427:2458" ph="SELECT * FRO... image" />
           </folding>
         </state>
       </provider>
@@ -617,10 +623,11 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1476777661518" expanded="true" signature="2129:2155" ph="SELECT count... image" />
-            <marker date="1476777661518" expanded="true" signature="2509:2515" ph="SELECT name,... fruit" />
-            <marker date="1476777661518" expanded="true" signature="2509:2539" ph="SELECT * FRO... image" />
-            <marker date="1476777661518" expanded="true" signature="2509:2540" ph="SELECT * FRO... image" />
+            <marker date="1476778753113" expanded="true" signature="2129:2153" ph="SELECT count... " />
+            <marker date="1476778753113" expanded="true" signature="2129:2163" ph="SELECT count... " />
+            <marker date="1476778753113" expanded="true" signature="2427:2433" ph="SELECT name,... fruit" />
+            <marker date="1476778753113" expanded="true" signature="2427:2457" ph="SELECT * FRO... image" />
+            <marker date="1476778753113" expanded="true" signature="2427:2458" ph="SELECT * FRO... image" />
           </folding>
         </state>
       </provider>
@@ -653,7 +660,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="11" column="10" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
-          <folding />
+          <folding>
+            <marker date="1476775102832" expanded="true" signature="2:175" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -678,10 +687,11 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1476777661518" expanded="true" signature="2129:2155" ph="SELECT count... image" />
-            <marker date="1476777661518" expanded="true" signature="2509:2515" ph="SELECT name,... fruit" />
-            <marker date="1476777661518" expanded="true" signature="2509:2539" ph="SELECT * FRO... image" />
-            <marker date="1476777661518" expanded="true" signature="2509:2540" ph="SELECT * FRO... image" />
+            <marker date="1476778753113" expanded="true" signature="2129:2153" ph="SELECT count... " />
+            <marker date="1476778753113" expanded="true" signature="2129:2163" ph="SELECT count... " />
+            <marker date="1476778753113" expanded="true" signature="2427:2433" ph="SELECT name,... fruit" />
+            <marker date="1476778753113" expanded="true" signature="2427:2457" ph="SELECT * FRO... image" />
+            <marker date="1476778753113" expanded="true" signature="2427:2458" ph="SELECT * FRO... image" />
           </folding>
         </state>
       </provider>
@@ -714,7 +724,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="11" column="10" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
-          <folding />
+          <folding>
+            <marker date="1476775102832" expanded="true" signature="2:175" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -826,7 +838,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
           <caret line="6" column="96" selection-start-line="6" selection-start-column="96" selection-end-line="6" selection-end-column="114" />
-          <folding />
+          <folding>
+            <marker date="1476775102832" expanded="true" signature="2:175" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -856,13 +870,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Model/Image/imageDAO.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="106" column="28" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="28" />
+        <state relative-caret-position="180">
+          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
           <folding>
-            <marker date="1476777661518" expanded="true" signature="2129:2155" ph="SELECT count... image" />
-            <marker date="1476777661518" expanded="true" signature="2509:2515" ph="SELECT name,... fruit" />
-            <marker date="1476777661518" expanded="true" signature="2509:2539" ph="SELECT * FRO... image" />
-            <marker date="1476777661518" expanded="true" signature="2509:2540" ph="SELECT * FRO... image" />
+            <marker date="1476778753113" expanded="true" signature="2129:2153" ph="SELECT count... " />
+            <marker date="1476778753113" expanded="true" signature="2129:2163" ph="SELECT count... " />
+            <marker date="1476778753113" expanded="true" signature="2427:2433" ph="SELECT name,... fruit" />
+            <marker date="1476778753113" expanded="true" signature="2427:2457" ph="SELECT * FRO... image" />
+            <marker date="1476778753113" expanded="true" signature="2427:2458" ph="SELECT * FRO... image" />
           </folding>
         </state>
       </provider>

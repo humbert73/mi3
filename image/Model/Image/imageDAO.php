@@ -63,16 +63,14 @@ class ImageDAO
     # Retourne le nombre d'images référencées dans le DAO
     function size()
     {
-        $sql = "SELECT count(*) FROM image";
+        $sql = "SELECT count(*) as size FROM image";
         $res = $this->db->query($sql);
 
-//        var_dump("size : ".count($this->imgEntry));
-//        return count($this->imgEntry);
         if ($res) {
             $row = $this->getFirstRow($res);
         }
 
-        return $row[0];
+        return $row['size'];
     }
 
     # Retourne un objet image correspondant à l'identifiant
