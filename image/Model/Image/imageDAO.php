@@ -27,7 +27,6 @@ class ImageDAO
     {
         # build the full path using location of the image base
         $fdir = $this->path . $dir;
-        var_dump("fdir : ".$fdir);
         if (is_dir($fdir)) {
             $d = opendir($fdir);
             while (($file = readdir($d)) !== false) {
@@ -101,8 +100,6 @@ class ImageDAO
     function getRandomImage()
     {
         $imgId = rand(1, $this->size());
-        var_dump($this->size());
-        var_dump($imgId);
         return $this->getImage($imgId);
     }
 

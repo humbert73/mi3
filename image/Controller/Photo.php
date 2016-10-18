@@ -60,8 +60,6 @@ class Photo
         }
 
         $this->data->image_url = $this->image_dao->getRandomImage()->getURL();
-        var_dump($this->image_dao->getRandomImage()->getURL());
-        var_dump($this->data->image_url);
         $this->data->content   = "photoView.php";
         $this->data->menu      = $this->buildMenu();
 

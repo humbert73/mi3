@@ -11,5 +11,5 @@ class Data
     public $menu;
     public $content;
     public $image_url;
-    public $size;
+    public $size = 480;
 }
