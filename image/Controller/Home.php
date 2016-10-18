@@ -1,36 +1,48 @@
 <?php
 
+require_once('Model/Data.php');
+
 class Home
 {
     private $view;
     private $menu;
+    public $data;
 
-    public function display()
+    public function __construct()
     {
-        $this->view = "View/viewHome.php";
-        $this->menu = $this->buildMenu();
+        $this->data = new Data();
+    }
+
+    public function index()
+    {
+        $this->data->content="homeView.php";
+        $this->data->menu=$this->buildMenu();
+//        $this->view = "View/homeView.php";
+//        $this->menu = $this->buildMenu();
 
         $this->includeMainView();
     }
 
-    public function displayAPropos()
+    public function apropos()
     {
-        $this->view = "View/viewAPropos.php";
-        $this->menu = $this->buildMenu();
+        $this->data->content="aproposView.php";
+        $this->data->menu=$this->buildMenu();
+//        $this->view = "View/aproposView.php";
+//        $this->menu = $this->buildMenu();
 
         $this->includeMainView();
     }
 
     private function includeMainView()
     {
-        include("View/viewMain.php");
+        include("View/mainView.php");
     }
 
     private function buildMenu()
     {
         return array(
             'Home'        => 'index.php',
-            'A propos'    => 'index.php?action=displayAPropos',
+            'A propos'    => 'index.php?action=apropos',
             'Voir photos' => 'index.php?controller=Photo'
         );
     }

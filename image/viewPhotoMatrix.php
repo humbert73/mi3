@@ -59,22 +59,22 @@
                         # Ajoute à imgMatrixURL 
                         #  0 : l'URL de l'image
                         #  1 : l'URL de l'action lorsqu'on clique sur l'image : la visualiser seul
-                        $imgMatrixURL[] = array($i->getURL(),"viewPhoto.php?imgId=$iId");
+                        $imgMatrixURL[] = array($i->getURL(),"photoView.php?imgId=$iId");
                     }
 
                     # Mise en place du menu
                     
                     $random_image    = $imgDAO->getRandomImage();
                     $random_image_id = $random_image->getId();
-                    $menu['Home']="viewHome.php";
-                    $menu['A propos']="viewAPropos.php";
+                    $menu['Home']="homeView.php";
+                    $menu['A propos']="aproposView.php";
                     // Pre-calcule la première image
                     $newImg = $imgDAO->getFirstImage();     
                     # Change l'etat pour indiquer que cette image est la nouvelle
                     $newImgId=$newImg->getId(); 
                     $menu['First']="viewPhotoMatrix.php?imgId=$newImgId&nbImg=$nbImg";
                     # Pre-calcule une image au hasard
-                    $menu['Random']= "viewPhoto.php?imgId=$random_image_id&size=$size";
+                    $menu['Random']= "photoView.php?imgId=$random_image_id&size=$size";
                     # Pré-calcule le nouveau nombre d'images à afficher si on en veux plus
                     $newMoreNbImg = $nbImg * 2;
                     $newLessNbImg = $nbImg / 2;

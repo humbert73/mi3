@@ -26,5 +26,5 @@
     // Calcule la nouvelle taille
     $size *= $zoom;
     // Retourne dans le mode d'affichage d'une image
-    header("Location: viewPhoto.php?imgId=$imgId&size=$size");
+    header("Location: photoView.php?imgId=$imgId&size=$size");
 ?>

@@ -14,7 +14,7 @@
             <h3>Menu</h3>
             <ul>
                 <?php
-                    foreach ($this->getMenu() as $item => $act) {
+                    foreach ($this->data->menu as $item => $act) {
                         print "<li><a href=\"$act\">$item</a></li>\n";
                     }
                 ?>
@@ -23,7 +23,7 @@
 
         <div id="corps">
             <?php
-                include($this->getView());
+                require_once($this->data->content);
             ?>
         </div>
 

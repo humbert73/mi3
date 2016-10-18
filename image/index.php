@@ -9,7 +9,7 @@ if (isset($_GET["controller"])) {
 if (isset($_GET["action"])) {
     $action = $_GET["action"];
 } else {
-    $action = "display";
+    $action = "index";
 }
 
 $controller_file_name = "Controller/".$controller_to_run.'.php';

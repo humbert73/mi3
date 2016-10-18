@@ -2,40 +2,51 @@
 
 require_once("Model/Image/image.php");
 require_once("Model/Image/imageDAO.php");
+require_once("Model/Data.php");
 
 class Photo
 {
-    private $imgDAO;
+    private $image_dao;
     private $view;
     private $menu;
     private $image;
-    public $size;
-    public $image_url;
+    public  $size;
+    public  $image_url;
+    public  $data;
 
     public function __construct()
     {
-        $this->imgDAO = new ImageDAO();
+        $this->image_dao = new ImageDAO();
+        $this->data      = new Data();
     }
 
-    public function display()
+    public function index()
     {
-        if (isset($_GET["imgId"])) {
-            $this->image = $this->imgDAO->getImage($_GET["imgId"]);
-        } else {
-            $this->image = $this->imgDAO->getFirstImage();
-        }
-        $this->image_url = $this->image->getURL();
+        $this->first();
+//        if (isset($_GET["imgId"])) {
+//            $this->image = $this->image_dao->getImage($_GET["imgId"]);
+//        } else {
+//            $this->image = $this->image_dao->getFirstImage();
+//        }
+//        $this->data->image_url = $this->image->getURL();
+//
+//        if (isset($_GET["size"])) {
+//            $this->size = $_GET["size"];
+//        } else {
+//            $this->size = 480;
+//        }
+//
+//        $this->data->content = "photoView.php";
+//        $this->data->menu    = $this->buildMenu();
+//
+//        $this->includeMainView();
+    }
 
-        if (isset($_GET["size"])) {
-            $this->size = $_GET["size"];
-        } else {
-            $this->size = 480;
-        }
-
-        $this->imgDAO = new ImageDAO();
-
-        $this->view = "View/viewPhoto.php";
-        $this->menu = $this->buildMenu();
+    public function first()
+    {
+        $this->data->image_url = $this->image_dao->getFirstImage()->getURL();
+        $this->data->content   = "photoView.php";
+        $this->data->menu      = $this->buildMenu();
 
         $this->includeMainView();
     }
@@ -48,13 +59,11 @@ class Photo
             $this->size = 480;
         }
 
-        $this->imgDAO = new ImageDAO();
-
-        $this->image = $this->imgDAO->getRandomImage();
-        $this->image_url = $this->image->getURL();
-
-        $this->view = "View/viewPhoto.php";
-        $this->menu = $this->buildMenu();
+        $this->data->image_url = $this->image_dao->getRandomImage()->getURL();
+        var_dump($this->image_dao->getRandomImage()->getURL());
+        var_dump($this->data->image_url);
+        $this->data->content   = "photoView.php";
+        $this->data->menu      = $this->buildMenu();
 
         $this->includeMainView();
     }
@@ -69,9 +78,9 @@ class Photo
             'Home'     => 'index.php',
             'A propos' => 'index.php?action=displayAPropos',
             'First'    => 'index.php?controller=Photo&action=first',
-            'Random'    => 'index.php?controller=Photo&action=random',
-            'Zoom +'    => 'index.php?controller=Photo&action=zoomplus',
-            'Zoom -'    => 'index.php?controller=Photo&action=zoomminus'
+            'Random'   => 'index.php?controller=Photo&action=random',
+            'Zoom +'   => 'index.php?controller=Photo&action=zoomplus',
+            'Zoom -'   => 'index.php?controller=Photo&action=zoomminus'
         );
 //        $menu['More']     = "viewPhotoMatrix.php?imgId=$image_id"; # Pour afficher plus d'image passe à une autre page
 //        $menu['Zoom +']   = "zoom.php?zoom=1.25&imgId=$image_id&size=$this->size"; // Demande à calculer un zoom sur l'image
@@ -92,31 +101,35 @@ class Photo
 
     public function getPrevImageId()
     {
-        return  $this->imgDAO->getPrevImage($img)->getId();
+        return  $this->image_dao->getPrevImage($img)->getId();
     }
 
     private function includeMainView()
     {
-        include("View/viewMain.php");
+        include("View/mainView.php");
     }
 
     public function getLinkNextImage()
     {
-        $next_image_id = $this->imgDAO->getNextImage($this->image)->getId();
+        //$next_image_id = $this->image_dao->getNextImage($this->image)->getId();
 
-        return "index.php?controller=Photo&imgId=$next_image_id&size=$this->size";
+        // return "index.php?controller=Photo&imgId=$next_image_id&size=$this->size";
+        return "index.php?controller=Photo&action=next";
     }
 
-    public function getLinkPrevImage()
+    public function getLinkPreviousImage()
     {
-        $prev_image_id = $this->imgDAO->getNextImage($this->image)->getId();
+        //$prev_image_id = $this->image_dao->getNextImage(    $this->image)->getId();
 
-        return "index.php?controller=Photo&imgId=$prev_image_id&size=$this->size";
+        //return "index.php?controller=Photo&imgId=$prev_image_id&size=$this->size";
+        return "index.php?controller=Photo&action=previous";
     }
 
     public function getLinkImage()
     {
-        $image_id = $this->image->getId();
-        return "zoom.php?zoom=1.25&imgId=$image_id&size=$this->size";
+//        $image_id = $this->image->getId();
+//        return "zoom.php?zoom=1.25&imgId=$image_id&size=$this->size";
+
+            return $this->data->image_url;
     }
 }

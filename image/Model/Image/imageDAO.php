@@ -11,7 +11,7 @@ class ImageDAO
     # A MODIFIER EN FONCTION DE VOTRE INSTALLATION
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # Chemin LOCAL où se trouvent les images
-    private $path = "Model/IMG/";
+    private $path = "/home/moreauhu/sites/image/Model/IMG/jons/external";
     # Chemin URL où se trouvent les images
     const urlPath = "http://localhost/mi3/image/Model/IMG/";
 
@@ -27,6 +27,7 @@ class ImageDAO
     {
         # build the full path using location of the image base
         $fdir = $this->path . $dir;
+        var_dump("fdir : ".$fdir);
         if (is_dir($fdir)) {
             $d = opendir($fdir);
             while (($file = readdir($d)) !== false) {
@@ -63,7 +64,16 @@ class ImageDAO
     # Retourne le nombre d'images référencées dans le DAO
     function size()
     {
-        return count($this->imgEntry);
+        $sql = "SELECT count(*) FROM image";
+        $res = $this->db->query($sql);
+
+//        var_dump("size : ".count($this->imgEntry));
+//        return count($this->imgEntry);
+        if ($res) {
+            $row = $this->getFirstRow($res);
+        }
+
+        return $row[0];
     }
 
     # Retourne un objet image correspondant à l'identifiant
@@ -91,6 +101,8 @@ class ImageDAO
     function getRandomImage()
     {
         $imgId = rand(1, $this->size());
+        var_dump($this->size());
+        var_dump($imgId);
         return $this->getImage($imgId);
     }
 
