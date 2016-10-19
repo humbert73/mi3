@@ -17,8 +17,6 @@ class Home
     {
         $this->data->content="homeView.php";
         $this->data->menu=$this->buildMenu();
-//        $this->view = "View/homeView.php";
-//        $this->menu = $this->buildMenu();
 
         $this->includeMainView();
     }
@@ -27,8 +25,6 @@ class Home
     {
         $this->data->content="aproposView.php";
         $this->data->menu=$this->buildMenu();
-//        $this->view = "View/aproposView.php";
-//        $this->menu = $this->buildMenu();
 
         $this->includeMainView();
     }
