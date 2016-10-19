@@ -108,23 +108,29 @@ class ImageDAO
     }
 
     # Retourne l'image suivante d'une image
-    function getNextImage(image $img)
+    function getNextImage()
     {
-        $id = $img->getId();
-        if ($id < $this->size()) {
-            $img = $this->getImage($id + 1);
+        if(isset($_GET['id'])){
+
+            $imgId = $_GET['id'];
+
         }
-        return $img;
+
+        return $this->getImage($imgId+1);
     }
 
     # Retourne l'image précédente d'une image
-    function getPrevImage(image $img)
+    function getPrevImage()
     {
-        $id = $img->getId();
-        if ($id > 1) {
-            $img = $this->getImage($id - 1);
+        if(isset($_GET['id']) && $_GET['id'] >= 1){
+
+            $imgId = $_GET['id'];
+
+        } else if (isset($_GET['id']) && $_GET['id'] == NULL){
+            $imgId = NULL;
         }
-        return $img;
+
+        return $this->getImage($imgId-1);
     }
 
     # saute en avant ou en arrière de $nb images

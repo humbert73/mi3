@@ -13,6 +13,7 @@ class Photo
     public  $size;
     public  $image_url;
     public  $data;
+    public  $imageId;
 
     public function __construct()
     {
@@ -51,6 +52,36 @@ class Photo
         $this->includeMainView();
     }
 
+    public function next(){
+
+        $this->data->image_id = $this->image_dao->getNextImage()->getId();
+
+        $this->data->image_url = $this->image_dao->getImage($this->data->image_id-1)->getURL();
+        $this->data->content   = "photoView.php";
+        $this->data->menu      = $this->buildMenu();
+
+        $this->includeMainView();
+
+    }
+
+    public function previous(){
+
+        $this->data->image_id = $this->image_dao->getPrevImage()->getId();
+
+
+             if ($this->data->image_id == NULL) {
+                $this->data->image_url = $this->image_dao->getImage(1)->getURL();
+            } else {
+                $this->data->image_url = $this->image_dao->getImage($this->data->image_id+1)->getURL();
+            }
+
+        $this->data->content   = "photoView.php";
+        $this->data->menu      = $this->buildMenu();
+
+        $this->includeMainView();
+
+    }
+
     public function random()
     {
         if (isset($_GET["size"])) {
@@ -62,8 +93,16 @@ class Photo
         $this->data->image_url = $this->image_dao->getRandomImage()->getURL();
         $this->data->content   = "photoView.php";
         $this->data->menu      = $this->buildMenu();
+        $this->data->image_id  = $this->image_dao->getRandomImage()->getId();
 
         $this->includeMainView();
+    }
+
+    public function buildId(){
+
+        $imageId = $this->image->getId();
+
+        return $imageId;
     }
 
     public function buildMenu()
@@ -75,8 +114,8 @@ class Photo
         $menu = array(
             'Home'     => 'index.php',
             'A propos' => 'index.php?action=displayAPropos',
-            'First'    => 'index.php?controller=Photo&action=first',
-            'Random'   => 'index.php?controller=Photo&action=random',
+            'First'    => 'index.php?id=1&controller=Photo&action=first',
+            'Random'   => 'index.php?id='.$this->image_dao->getRandomImage()->getId().'&controller=Photo&action=random',
             'Zoom +'   => 'index.php?controller=Photo&action=zoomplus',
             'Zoom -'   => 'index.php?controller=Photo&action=zoomminus'
         );
@@ -109,10 +148,8 @@ class Photo
 
     public function getLinkNextImage()
     {
-        //$next_image_id = $this->image_dao->getNextImage($this->image)->getId();
 
-        // return "index.php?controller=Photo&imgId=$next_image_id&size=$this->size";
-        return "index.php?controller=Photo&action=next";
+        return 'index.php?id='.$this->image_dao->getNextImage()->getId().'&controller=Photo&action=next';
     }
 
     public function getLinkPreviousImage()
@@ -120,7 +157,7 @@ class Photo
         //$prev_image_id = $this->image_dao->getNextImage(    $this->image)->getId();
 
         //return "index.php?controller=Photo&imgId=$prev_image_id&size=$this->size";
-        return "index.php?controller=Photo&action=previous";
+        return 'index.php?id='.$this->image_dao->getPrevImage()->getId().'&controller=Photo&action=previous';
     }
 
     public function getLinkImage()
