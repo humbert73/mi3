@@ -20,43 +20,19 @@ class ImageDAO
 
     private $image_factory;
 
-    # Lecture récursive d'un répertoire d'images
-    # Ce ne sont pas des objets qui sont stockes mais juste
-    # des chemins vers les images.
-    private function readDir($dir)
-    {
-        # build the full path using location of the image base
-        $fdir = $this->path . $dir;
-        if (is_dir($fdir)) {
-            $d = opendir($fdir);
-            while (($file = readdir($d)) !== false) {
-                if (is_dir($fdir . "/" . $file)) {
-                    # This entry is a directory, just have to avoid . and .. or anything starts with '.'
-                    if ($file[0] != '.') {
-                        # a recursive call
-                        $this->readDir($dir . "/" . $file);
-                    }
-                } else {
-                    # a simple file, store it in the file list
-                    if ($file[0] != '.') {
-                        $this->imgEntry[] = "$dir/$file";
-                    }
-                }
-            }
-        }
-    }
 
     function __construct()
     {
         $this->image_factory = new ImageFactory();
 
-        $dsn  = 'sqlite:DB/image.db'; // Data source name
-        $user = ''; // Utilisateur
-        $pass = ''; // Mot de passe
+        $dsn  = 'sqlite:DB/image.db';
+        $user = '';
+        $pass = '';
+
         try {
-            $this->db = new PDO($dsn, $user, $pass); //$db est un attribut privé d'ImageDAO
+            $this->db = new PDO($dsn, $user, $pass);
         } catch (PDOException $e) {
-            die ("Erreur : " . $e->getMessage());
+            die ("Erreur : ".$e->getMessage());
         }
     }
 
@@ -97,14 +73,18 @@ class ImageDAO
     # Retourne une image au hazard
     function getRandomImage()
     {
-        $imgId = rand(1, $this->size());
-        return $this->getImage($imgId);
+        return $this->getImage(rand(1, $this->size()));
     }
 
     # Retourne l'objet de la premiere image
     function getFirstImage()
     {
         return $this->getImage(1);
+    }
+
+    function getLastImage()
+    {
+        return $this->getImage($this->size());
     }
 
     /**
@@ -117,6 +97,7 @@ class ImageDAO
         } else {
             $image = $this->getImage($id);
         }
+
         return $image;
     }
 

@@ -27,6 +27,12 @@ class Photo
         $this->buildViewPhoto();
     }
 
+    public function last()
+    {
+        $this->buildDataImage($this->image_dao->getLastImage());
+        $this->buildViewPhoto();
+    }
+
     public function next()
     {
         $id = $this->getImageIdFromUrl();
@@ -131,13 +137,15 @@ class Photo
         include("View/mainView.php");
     }
 
-    public function getLinkNextImage()
+    public function getLinkForAction($action)
     {
-        return 'index.php?controller=Photo&action=next&id='.$this->data->image_id.'&size='.$this->data->size;
-    }
+        $params = [
+            "controller" => "Photo",
+            "action"     => $action,
+            "id"         => $this->data->image_id,
+            "size"       => $this->data->size
+        ];
 
-    public function getLinkPreviousImage()
-    {
-        return 'index.php?controller=Photo&action=previous&id='.$this->data->image_id.'&size='.$this->data->size;
+        return 'index.php?'.http_build_query($params);
     }
 }
