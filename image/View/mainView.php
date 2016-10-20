@@ -23,7 +23,7 @@
 
         <div id="corps">
             <?php
-                require_once($this->data->content);
+                include($this->data->content);
             ?>
         </div>
 

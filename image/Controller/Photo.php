@@ -8,11 +8,7 @@ class Photo
 {
     const ZOOM = 0.25;
     private $image_dao;
-    private $menu;
-    public  $size;
-    public  $image_url;
     public  $data;
-    public  $imageId;
 
     public function __construct()
     {
@@ -28,68 +24,52 @@ class Photo
     public function first()
     {
         $this->buildDataImage($this->image_dao->getFirstImage());
-        $this->data->content = "photoView.php";
-        $this->data->menu    = $this->buildMenu();
-
-        $this->includeMainView();
+        $this->buildViewPhoto();
     }
 
     public function next()
     {
-        if (isset($_GET["id"])) {
-            $id = $_GET["id"];
-        } else {
-            $id = 1;
-        }
-        $this->buildDataImage($this->image_dao->getNextImage($this->image_dao->getImage($id)));
-        $this->data->content = "photoView.php";
-        $this->data->menu    = $this->buildMenu();
-
-        $this->includeMainView();
+        $id = $this->getImageIdFromUrl();
+        $this->buildDataImage($this->image_dao->getNextImageById($id));
+        $this->buildViewPhoto();
     }
 
     public function previous()
     {
+        $id = $this->getImageIdFromUrl();
+        $this->buildDataImage($this->image_dao->getPreviousImageById($id));
+        $this->buildViewPhoto();
+    }
+
+    private function getImageIdFromUrl()
+    {
+        $id = 1;
         if (isset($_GET["id"])) {
             $id = $_GET["id"];
-        } else {
-            $id = 1;
         }
-        $this->buildDataImage($this->image_dao->getPreviousImage($this->image_dao->getImage($id)));
-        $this->data->content = "photoView.php";
-        $this->data->menu    = $this->buildMenu();
 
-        $this->includeMainView();
+        return $id;
     }
 
     public function random()
     {
         $this->recupUrlData();
         $this->buildDataImage($this->image_dao->getRandomImage());
-        $this->data->content = "photoView.php";
-        $this->data->menu    = $this->buildMenu();
-
-        $this->includeMainView();
+        $this->buildViewPhoto();
     }
 
     public function zoomPlus()
     {
+        $this->data->zoom += self::ZOOM;
         $this->recupUrlData();
-        $this->data->zoom   += self::ZOOM;
-        $this->data->content = "photoView.php";
-        $this->data->menu    = $this->buildMenu();
-
-        $this->includeMainView();
+        $this->buildViewPhoto();
     }
 
     public function zoomMinus()
     {
+        $this->data->zoom -= self::ZOOM;
         $this->recupUrlData();
-        $this->data->zoom   -= self::ZOOM;
-        $this->data->content = "photoView.php";
-        $this->data->menu    = $this->buildMenu();
-
-        $this->includeMainView();
+        $this->buildViewPhoto();
     }
 
     private function buildDataImage(Image $image)
@@ -99,10 +79,40 @@ class Photo
         $this->data->image_id  = $image->getId();
     }
 
+    public function buildViewPhoto()
+    {
+        $this->data->content = "photoView.php";
+        $this->data->menu    = $this->buildMenu();
+
+        $this->includeMainView();
+    }
+
+    public function buildMenu()
+    {
+        $index            = 'index.php';
+        $controller_photo = '?controller=Photo';
+        $image_info       = $this->buildAdditionalUrlImageInfo();
+        $menu             = array(
+            'Home'     => $index,
+            'A propos' => $index.'?action=apropos',
+            'First'    => $index.$controller_photo.'&action=first'.$image_info,
+            'Random'   => $index.$controller_photo.'&action=random'.$image_info,
+            'Zoom +'   => $index.$controller_photo.'&action=zoomPlus'.$image_info,
+            'Zoom -'   => $index.$controller_photo.'&action=zoomMinus'.$image_info
+        );
+
+        return $menu;
+    }
+
+    private function buildAdditionalUrlImageInfo()
+    {
+        return '&id='.$this->data->image_id.'&size='.$this->data->size;
+    }
+
     private function recupUrlData()
     {
         if (isset($_GET["id"])) {
-            $image_id              = $_GET["id"];
+            $image_id = $_GET["id"];
             $this->data->image_id  = $image_id;
             $this->data->image_url = $this->image_dao->getImage($image_id)->getURL();
         }
@@ -114,28 +124,6 @@ class Photo
             $size             = $_GET["size"];
             $this->data->size = $size * $this->data->zoom;
         }
-    }
-
-    private function buildAdditionalUrlImageInfo()
-    {
-        return '&id='.$this->data->image_id.'&size='.$this->data->size * $this->data->zoom;
-    }
-
-    public function buildMenu()
-    {
-        $index            = 'index.php';
-        $controller_photo = '?controller=Photo';
-        $image_info       = $this->buildAdditionalUrlImageInfo();
-        $menu             = array(
-            'Home'     => $index,
-            'A propos' => $index.'?action=displayAPropos',
-            'First'    => $index.$controller_photo.'&action=first'.$image_info,
-            'Random'   => $index.$controller_photo.'&action=random'.$image_info,
-            'Zoom +'   => $index.$controller_photo.'&action=zoomPlus'.$image_info,
-            'Zoom -'   => $index.$controller_photo.'&action=zoomMinus'.$image_info
-        );
-
-        return $menu;
     }
 
     private function includeMainView()

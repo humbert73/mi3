@@ -1,5 +1,5 @@
 nbproject
-*.xml
+image/\.idea/workspace.xml
 image/model/IMG/*
 *.jpg
 ~/mi3/image/model/IMG/

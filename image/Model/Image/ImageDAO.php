@@ -107,38 +107,33 @@ class ImageDAO
         return $this->getImage(1);
     }
 
-    # Retourne l'image suivante d'une image
-//    function getNextImage()
-//    {
-//        if(isset($_GET['id'])){
-//
-//            $imgId = $_GET['id'];
-//
-//        }
-//
-//        return $this->getImage($imgId+1);
-//    }
-    function getNextImage(Image $image)
+    /**
+     * @return Image
+     */
+    function getNextImageById($id)
     {
-        $id = $image->getId();
         if ($id < $this->size()) {
             $image = $this->getImage($id + 1);
+        } else {
+            $image = $this->getImage($id);
         }
         return $image;
     }
 
-    # Retourne l'image précédente d'une image
-    function getPreviousImage(Image $image)
+    /**
+     * @return Image
+     */
+    function getPreviousImageById($id)
     {
-        $id = $image->getId();
         if ($id > 1) {
             $image = $this->getImage($id - 1);
+        } else {
+            $image = $this->getImage($id);
         }
+
         return $image;
     }
 
-    # saute en avant ou en arrière de $nb images
-    # Retourne la nouvelle image
     function jumpToImage(image $img, $nb)
     {
         $id     = $img->getId();
