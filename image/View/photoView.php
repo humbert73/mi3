@@ -5,9 +5,13 @@
     ?>
 </p>
 <?php
-    var_dump("image url : ".$this->data->image_url.PHP_EOL);
-    var_dump("image id : ".$this->data->image_id.PHP_EOL);
-    var_dump("image size : ".$this->data->size.PHP_EOL);
-    var_dump("image zoom : ".$this->data->zoom.PHP_EOL);
+var_dump("image url : ".$this->data->image_url);
+echo("</br>");
+var_dump("image id : ".$this->data->image_id);
+echo("</br>");
+var_dump("image size : ".$this->data->size);
+echo("</br>");
+var_dump("image zoom : ".$this->data->zoom);
+echo("</br>");
 ?>
 <?php echo '<a href="'.$this->data->image_url.'"><img src="'.$this->data->image_url.'" width="'.$this->data->size.'"></a>'.PHP_EOL; ?>

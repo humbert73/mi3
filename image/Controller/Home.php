@@ -39,7 +39,7 @@ class Home
         return array(
             'Home'        => 'index.php',
             'A propos'    => 'index.php?action=apropos',
-            'Voir photos' => 'index.php?controller=Photo'
+            'Voir photos' => 'index.php?id=1&controller=Photo'
         );
     }
 

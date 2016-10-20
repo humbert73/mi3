@@ -1,19 +1,18 @@
 <?php
 
-require_once("Model/Image/image.php");
-require_once("Model/Image/imageDAO.php");
+require_once("Model/Image/Image.php");
+require_once("Model/Image/ImageDAO.php");
 require_once("Model/Data.php");
 
 class Photo
 {
     const ZOOM = 0.25;
     private $image_dao;
-    private $view;
     private $menu;
-    private $image;
     public  $size;
     public  $image_url;
     public  $data;
+    public  $imageId;
 
     public function __construct()
     {
@@ -24,30 +23,41 @@ class Photo
     public function index()
     {
         $this->first();
-//        if (isset($_GET["imgId"])) {
-//            $this->image = $this->image_dao->getImage($_GET["imgId"]);
-//        } else {
-//            $this->image = $this->image_dao->getFirstImage();
-//        }
-//        $this->data->image_url = $this->image->getURL();
-//
-//        if (isset($_GET["size"])) {
-//            $this->size = $_GET["size"];
-//        } else {
-//            $this->size = 480;
-//        }
-//
-//        $this->data->content = "photoView.php";
-//        $this->data->menu    = $this->buildMenu();
-//
-//        $this->includeMainView();
     }
 
     public function first()
     {
         $this->buildDataImage($this->image_dao->getFirstImage());
-        $this->data->content   = "photoView.php";
-        $this->data->menu      = $this->buildMenu();
+        $this->data->content = "photoView.php";
+        $this->data->menu    = $this->buildMenu();
+
+        $this->includeMainView();
+    }
+
+    public function next()
+    {
+        if (isset($_GET["id"])) {
+            $id = $_GET["id"];
+        } else {
+            $id = 1;
+        }
+        $this->buildDataImage($this->image_dao->getNextImage($this->image_dao->getImage($id)));
+        $this->data->content = "photoView.php";
+        $this->data->menu    = $this->buildMenu();
+
+        $this->includeMainView();
+    }
+
+    public function previous()
+    {
+        if (isset($_GET["id"])) {
+            $id = $_GET["id"];
+        } else {
+            $id = 1;
+        }
+        $this->buildDataImage($this->image_dao->getPreviousImage($this->image_dao->getImage($id)));
+        $this->data->content = "photoView.php";
+        $this->data->menu    = $this->buildMenu();
 
         $this->includeMainView();
     }
@@ -82,7 +92,6 @@ class Photo
         $this->includeMainView();
     }
 
-
     private function buildDataImage(Image $image)
     {
         $this->recupUrlData();
@@ -90,17 +99,10 @@ class Photo
         $this->data->image_id  = $image->getId();
     }
 
-    private function buildUrlData()
-    {
-        $_GET["image_id"] = $this->data->image_id;
-        $_GET["size"] = $this->data->size;
-        $_GET["zoom"]= $this->data->zoom;
-    }
-
     private function recupUrlData()
     {
-        if (isset($_GET["image_id"])) {
-            $image_id              = $_GET["image_id"];
+        if (isset($_GET["id"])) {
+            $image_id              = $_GET["id"];
             $this->data->image_id  = $image_id;
             $this->data->image_url = $this->image_dao->getImage($image_id)->getURL();
         }
@@ -116,7 +118,7 @@ class Photo
 
     private function buildAdditionalUrlImageInfo()
     {
-        return '&image_id='.$this->data->image_id.'&zoom='.$this->data->zoom.'&size='.$this->data->size*$this->data->zoom;
+        return '&id='.$this->data->image_id.'&size='.$this->data->size * $this->data->zoom;
     }
 
     public function buildMenu()
@@ -136,21 +138,6 @@ class Photo
         return $menu;
     }
 
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    public function getMenu()
-    {
-        return $this->menu;
-    }
-
-    public function getPrevImageId()
-    {
-        return $this->image_dao->getPrevImage($img)->getId();
-    }
-
     private function includeMainView()
     {
         include("View/mainView.php");
@@ -158,25 +145,11 @@ class Photo
 
     public function getLinkNextImage()
     {
-        //$next_image_id = $this->image_dao->getNextImage($this->image)->getId();
-
-        // return "index.php?controller=Photo&imgId=$next_image_id&size=$this->size";
-        return "index.php?controller=Photo&action=next";
+        return 'index.php?controller=Photo&action=next&id='.$this->data->image_id.'&size='.$this->data->size;
     }
 
     public function getLinkPreviousImage()
     {
-        //$prev_image_id = $this->image_dao->getNextImage(    $this->image)->getId();
-
-        //return "index.php?controller=Photo&imgId=$prev_image_id&size=$this->size";
-        return "index.php?controller=Photo&action=previous";
-    }
-
-    public function getLinkImage()
-    {
-//        $image_id = $this->image->getId();
-//        return "zoom.php?zoom=1.25&imgId=$image_id&size=$this->size";
-
-        return $this->data->image_url;
+        return 'index.php?controller=Photo&action=previous&id='.$this->data->image_id.'&size='.$this->data->size;
     }
 }

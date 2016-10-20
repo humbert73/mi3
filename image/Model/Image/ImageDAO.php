@@ -1,6 +1,6 @@
 <?php
 
-require_once("image.php");
+require_once("Image.php");
 require_once("ImageFactory.php");
 
 # Le 'Data Access Object' d'un ensemble images
@@ -108,23 +108,33 @@ class ImageDAO
     }
 
     # Retourne l'image suivante d'une image
-    function getNextImage(image $img)
+//    function getNextImage()
+//    {
+//        if(isset($_GET['id'])){
+//
+//            $imgId = $_GET['id'];
+//
+//        }
+//
+//        return $this->getImage($imgId+1);
+//    }
+    function getNextImage(Image $image)
     {
-        $id = $img->getId();
+        $id = $image->getId();
         if ($id < $this->size()) {
-            $img = $this->getImage($id + 1);
+            $image = $this->getImage($id + 1);
         }
-        return $img;
+        return $image;
     }
 
     # Retourne l'image précédente d'une image
-    function getPrevImage(image $img)
+    function getPreviousImage(Image $image)
     {
-        $id = $img->getId();
+        $id = $image->getId();
         if ($id > 1) {
-            $img = $this->getImage($id - 1);
+            $image = $this->getImage($id - 1);
         }
-        return $img;
+        return $image;
     }
 
     # saute en avant ou en arrière de $nb images
