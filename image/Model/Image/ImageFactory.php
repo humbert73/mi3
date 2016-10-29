@@ -4,7 +4,7 @@
 class ImageFactory
 {
 
-    const urlPath = "http://localhost/mi3/image/Model/IMG/";
+    const urlPath = "http://localhost:63342/image/Model/IMG/";
 
     public function __construct()
     {

@@ -11,9 +11,9 @@ class ImageDAO
     # A MODIFIER EN FONCTION DE VOTRE INSTALLATION
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # Chemin LOCAL où se trouvent les images
-    private $path = "/home/moreauhu/sites/image/Model/IMG/jons/external";
+    private $path = "Model/IMG/jons/external";
     # Chemin URL où se trouvent les images
-    const urlPath = "http://localhost/mi3/image/Model/IMG/";
+    const urlPath = "http://localhost:63342/image/Model/IMG/";
 
     # Tableau pour stocker tous les chemins des images
     private $imgEntry;
