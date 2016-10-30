@@ -7,13 +7,13 @@ require_once("Model/Data.php");
 class Photo
 {
     const ZOOM = 0.25;
-    private $image_dao;
-    public  $data;
+    public $image_factory;
+    public $data;
 
     public function __construct()
     {
-        $this->image_dao = new ImageDAO();
-        $this->data      = new Data();
+        $this->image_factory = new ImageFactory(new ImageDAO());
+        $this->data = new Data();
     }
 
     public function index()
@@ -23,27 +23,27 @@ class Photo
 
     public function first()
     {
-        $this->buildDataImage($this->image_dao->getFirstImage());
+        $this->buildDataImage($this->image_factory->getFirstImage());
         $this->buildViewPhoto();
     }
 
     public function last()
     {
-        $this->buildDataImage($this->image_dao->getLastImage());
+        $this->buildDataImage($this->image_factory->getLastImage());
         $this->buildViewPhoto();
     }
 
     public function next()
     {
         $id = $this->getImageIdFromUrl();
-        $this->buildDataImage($this->image_dao->getNextImageById($id));
+        $this->buildDataImage($this->image_factory->getNextImageById($id));
         $this->buildViewPhoto();
     }
 
     public function previous()
     {
         $id = $this->getImageIdFromUrl();
-        $this->buildDataImage($this->image_dao->getPreviousImageById($id));
+        $this->buildDataImage($this->image_factory->getPreviousImageById($id));
         $this->buildViewPhoto();
     }
 
@@ -60,7 +60,7 @@ class Photo
     public function random()
     {
         $this->recupUrlData();
-        $this->buildDataImage($this->image_dao->getRandomImage());
+        $this->buildDataImage($this->image_factory->getRandomImage());
         $this->buildViewPhoto();
     }
 
@@ -82,29 +82,28 @@ class Photo
     {
         $this->recupUrlData();
         $this->data->image_url = $image->getURL();
-        $this->data->image_id  = $image->getId();
+        $this->data->image_id = $image->getId();
     }
 
     public function buildViewPhoto()
     {
         $this->data->content = "photoView.php";
-        $this->data->menu    = $this->buildMenu();
+        $this->data->menu = $this->buildMenu();
 
         $this->includeMainView();
     }
 
     public function buildMenu()
     {
-        $index            = 'index.php';
+        $index = 'index.php';
         $controller_photo = '?controller=Photo';
-        $image_info       = $this->buildAdditionalUrlImageInfo();
-        $menu             = array(
-            'Home'     => $index,
-            'A propos' => $index.'?action=apropos',
-            'First'    => $index.$controller_photo.'&action=first'.$image_info,
-            'Random'   => $index.$controller_photo.'&action=random'.$image_info,
-            'Zoom +'   => $index.$controller_photo.'&action=zoomPlus'.$image_info,
-            'Zoom -'   => $index.$controller_photo.'&action=zoomMinus'.$image_info
+        $image_info = $this->buildAdditionalUrlImageInfo();
+        $menu = array(
+            'Home' => $index,
+            'A propos' => $index . '?action=apropos',
+            'Random' => $index . $controller_photo . '&action=random' . $image_info,
+            'Zoom +' => $index . $controller_photo . '&action=zoomPlus' . $image_info,
+            'Zoom -' => $index . $controller_photo . '&action=zoomMinus' . $image_info
         );
 
         return $menu;
@@ -112,22 +111,22 @@ class Photo
 
     private function buildAdditionalUrlImageInfo()
     {
-        return '&id='.$this->data->image_id.'&size='.$this->data->size;
+        return '&id=' . $this->data->image_id . '&size=' . $this->data->size;
     }
 
     private function recupUrlData()
     {
         if (isset($_GET["id"])) {
             $image_id = $_GET["id"];
-            $this->data->image_id  = $image_id;
-            $this->data->image_url = $this->image_dao->getImage($image_id)->getURL();
+            $this->data->image_id = $image_id;
+            $this->data->image_url = $this->image_factory->getImageById($image_id)->getURL();
         }
         if (isset($_GET["zoom"])) {
-            $zoom             = $_GET["zoom"];
+            $zoom = $_GET["zoom"];
             $this->data->zoom = $zoom;
         }
         if (isset($_GET["size"])) {
-            $size             = $_GET["size"];
+            $size = $_GET["size"];
             $this->data->size = $size * $this->data->zoom;
         }
     }
@@ -141,11 +140,11 @@ class Photo
     {
         $params = [
             "controller" => "Photo",
-            "action"     => $action,
-            "id"         => $this->data->image_id,
-            "size"       => $this->data->size
+            "action" => $action,
+            "id" => $this->data->image_id,
+            "size" => $this->data->size
         ];
 
-        return 'index.php?'.http_build_query($params);
+        return 'index.php?' . http_build_query($params);
     }
 }

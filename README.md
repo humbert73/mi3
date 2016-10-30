@@ -1,3 +1,10 @@
 # mi3
-update `const urlPath = "http://localhost:63342/image/Model/IMG/";`
-on `mi3/image/Model/Image/[ImageDAO.php/ImageFactory.php]`
+## Galerie d'image
+
+##### A MODIFIER EN FONCTION DE VOTRE INSTALLATION
+Dans `mi3/image/Model/Image/ImageFactory.php`
+```PHP
+const URL_IMAGE_PATH = "http://MON_ADRESSE_URL/image/Model/IMG/
+```
+exemple : `const URL_IMAGE_PATH = "http://localhost/image/Model/IMG/"`
+
