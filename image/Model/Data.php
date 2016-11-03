@@ -14,4 +14,5 @@ class Data
     public $image_id;
     public $size = 480;
     public $zoom = 1;
+    public $nbImg;
 }

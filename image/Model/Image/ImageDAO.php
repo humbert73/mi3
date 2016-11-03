@@ -20,35 +20,9 @@ class ImageDAO
 
     private $image_factory;
 
-    # Lecture récursive d'un répertoire d'images
-    # Ce ne sont pas des objets qui sont stockes mais juste
-    # des chemins vers les images.
-    private function readDir($dir)
-    {
-        # build the full path using location of the image base
-        $fdir = $this->path . $dir;
-        if (is_dir($fdir)) {
-            $d = opendir($fdir);
-            while (($file = readdir($d)) !== false) {
-                if (is_dir($fdir . "/" . $file)) {
-                    # This entry is a directory, just have to avoid . and .. or anything starts with '.'
-                    if ($file[0] != '.') {
-                        # a recursive call
-                        $this->readDir($dir . "/" . $file);
-                    }
-                } else {
-                    # a simple file, store it in the file list
-                    if ($file[0] != '.') {
-                        $this->imgEntry[] = "$dir/$file";
-                    }
-                }
-            }
-        }
-    }
 
     function __construct()
     {
-        $this->image_factory = new ImageFactory();
 
         $dsn  = 'sqlite:DB/image.db'; // Data source name
         $user = ''; // Utilisateur
@@ -74,14 +48,13 @@ class ImageDAO
     }
 
     # Retourne un objet image correspondant à l'identifiant
-    function getImage($id)
+    # Retourne un objet image correspondant à l'identifiant
+    public function getImage($id)
     {
         $sql = "SELECT * FROM image WHERE id = $id";
         $res = $this->db->query($sql);
         if ($res) {
-            $row = $this->getFirstRow($res);
-
-            return $this->image_factory->createImage($row);
+            return $this->createImageFromRow($this->getFirstRow($res));
         } else {
             print "Error in getImage. id=" . $id . "<br/>";
             $err = $this->db->errorInfo();
@@ -107,17 +80,6 @@ class ImageDAO
         return $this->getImage(1);
     }
 
-    # Retourne l'image suivante d'une image
-//    function getNextImage()
-//    {
-//        if(isset($_GET['id'])){
-//
-//            $imgId = $_GET['id'];
-//
-//        }
-//
-//        return $this->getImage($imgId+1);
-//    }
     function getNextImage(Image $image)
     {
         $id = $image->getId();
@@ -150,20 +112,28 @@ class ImageDAO
     }
 
     # Retourne la liste des images consécutives à partir d'une image
-    function getImageList(image $img, $nb)
+    function getImageList($id, $nb)
     {
         # Verifie que le nombre d'image est non nul
         if (!$nb > 0) {
             debug_print_backtrace();
             trigger_error("Erreur dans ImageDAO.getImageList: nombre d'images nul");
         }
-        $id  = $img->getId();
+
         $max = $id + $nb;
+
         while ($id < $this->size() && $id < $max) {
-            $res[] = $this->getImage($id);
+
+            $images[] = $this->getImage($id);
             $id++;
         }
-        return $res;
+        return $images;
+
+    }
+
+    private function createImageFromRow($row)
+    {
+    return new Image($row['id'], ImageFactory::URL_IMAGE_PATH . $row['path']);
     }
 }
 
