@@ -4,8 +4,6 @@ require_once('Model/Data.php');
 
 class Home
 {
-    private $view;
-    private $menu;
     public $data;
 
     public function __construct()
@@ -15,17 +13,18 @@ class Home
 
     public function index()
     {
-        $this->data->content="homeView.php";
-        $this->data->menu=$this->buildMenu();
-
-        $this->includeMainView();
+        $this->buildView("homeView.php");
     }
 
     public function apropos()
     {
-        $this->data->content="aproposView.php";
-        $this->data->menu=$this->buildMenu();
+        $this->buildView("aproposView.php");
+    }
 
+    public function buildView($name_view)
+    {
+        $this->data->content = $name_view;
+        $this->data->menu    = $this->buildMenu();
         $this->includeMainView();
     }
 
@@ -41,15 +40,5 @@ class Home
             'A propos'    => 'index.php?action=apropos',
             'Voir photos' => 'index.php?id=1&controller=Photo'
         );
-    }
-
-    public function getView()
-    {
-        return $this->view;
-    }
-
-    public function getMenu()
-    {
-        return $this->menu;
     }
 }

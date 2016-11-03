@@ -10,7 +10,7 @@ require_once ('Photo.php');
 
 class PhotoMatrix extends Photo {
 
-    protected $nbImg = 1;
+    protected $nbImg;
 
     public function __construct()
     {
@@ -23,7 +23,7 @@ class PhotoMatrix extends Photo {
         $controller_photo = '?controller=Photo';
         $controller_photoMatrix = '?controller=PhotoMatrix';
         $image_info       = $this->buildAdditionalUrlImageInfo();
-        $image_infoMatrix = $this->buildAdditionalUrlImageInfo();
+        $image_infoMatrix = $this->buildAdditionalUrlImageMatrixInfo();
         $menu             = array(
             'Home'     => $index,
             'A propos' => $index.'?action=displayAPropos',
@@ -38,9 +38,19 @@ class PhotoMatrix extends Photo {
              return $menu;
     }
 
-    protected function buildAdditionalUrlImageInfo()
+    protected function buildAdditionalUrlImageMatrixInfo()
     {
         return '&id='.$this->data->image_id.'&size='.$this->data->size.'&nbImg='.$this->data->nbImg;
+    }
+
+    protected function getImageNbImgFromUrl()
+    {
+
+        if (isset($_GET["nbImg"])) {
+            $nbImg = $_GET["nbImg"];
+        }
+
+        return $nbImg;
     }
 
     protected function moreNbImg($nbImg)
@@ -55,40 +65,44 @@ class PhotoMatrix extends Photo {
         return $newLessNbImg;
     }
 
-    /*protected function buildDataImage(Image $image)
+    public function buildMatrixViewPhoto()
     {
-        parent::buildDataImage($image);
-        $this->data->nbImg = $this->nbImg;
+        $this->data->content = "photoMatrixView.php";
+        $this->data->menu = $this->buildMenu();
 
-    }*/
+        $this->includeMainView();
+    }
 
     public function more()
     {
-        $this->imageId = 1;
 
-        $image = $this->image_dao->getImage($this->imageId);
+        $imageDAO = new ImageDAO();
 
-        print_r('id :'.$this->imageId);
-        $nbImg=$this->nbImg;
+        //Extrait l'id de l'image en cours à partir de son URL
+        $id = $this->getImageIdFromUrl();
 
-        $nbImg = $this->moreNbImg($nbImg);
-        print_r('nbImg après fonction more : '.$nbImg);
+        //Extrait le nombre d'image affiché
+        $this->nbImg = $this->getImageNbImgFromUrl();
 
-        $this->buildDataImage($image);
+        //affecte le nouveau nombre d'images à $nbImg
+        $this->data->nbImg = $this->nbImg;
+        $this->data->image_id = $id;
 
-        $id = $this->data->image_id;
+        // multiplie par 2 le nombre d'images
+        $nbImg = $this->moreNbImg($this->nbImg);
 
-        // construit un tableau avec les id des images affichées
-        $imgLst = $this->image_dao->getImageList($id, $nbImg);
+        print_r($nbImg);
+        //Tableau des URLs des images à afficher à partir de leur id
+        $imgLst = $imageDAO->getImageList($id, $nbImg);
 
-        var_dump($imgLst[1]->getURL());
+        $this->buildMatrixViewPhoto();
 
+        //construit un tableau des URLs des images à afficher
         foreach ($imgLst as $key => $image){
 
-            $imgMatrixURL = $image[$key]->getURL();
-
+            $imgMatrixURL [] = $imgLst[$key]->getURL();
         }
-
+        
         return $imgMatrixURL;
 
     }

@@ -1,11 +1,12 @@
 <?php
 
+
 class ImageFactory
 {
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # A MODIFIER EN FONCTION DE VOTRE INSTALLATION
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    const URL_IMAGE_PATH = "http://localhost:63342/image/Model/IMG/";
+    const URL_IMAGE_PATH = "http://localhost/mi3/mi3/image/Model/IMG/";
 
     private $image_dao;
 
@@ -45,6 +46,7 @@ class ImageFactory
     {
         return $this->image_dao->size();
     }
+
     /**
      * @return Image
      */
@@ -55,8 +57,10 @@ class ImageFactory
         } else {
             $image = $this->image_dao->getImage($id);
         }
+
         return $image;
     }
+
     /**
      * @return Image
      */
@@ -67,8 +71,10 @@ class ImageFactory
         } else {
             $image = $this->image_dao->getImage($id);
         }
+
         return $image;
     }
+
     public function jumpToImage(image $img, $nb)
     {
         $id = $img->getId();
@@ -78,6 +84,7 @@ class ImageFactory
         }
         return $img;
     }
+
     # Retourne la liste des images consécutives à partir d'une image
 //    public function getImageList(image $img, $nb)
 //    {
@@ -94,5 +101,4 @@ class ImageFactory
 //        }
 //        return $res;
 //    }
-
 }
