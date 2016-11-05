@@ -25,47 +25,47 @@ class Photo
     {
         $this->recupUrlData();
         $this->buildDataImage($this->image_factory->getRandomImage());
-        $this->buildViewPhoto();
+        $this->buildView();
     }
 
     public function zoomPlus()
     {
         $this->data->zoom += self::ZOOM;
         $this->recupUrlData();
-        $this->buildViewPhoto();
+        $this->buildView();
     }
 
     public function zoomMinus()
     {
         $this->data->zoom -= self::ZOOM;
         $this->recupUrlData();
-        $this->buildViewPhoto();
+        $this->buildView();
     }
 
     public function first()
     {
         $this->buildDataImage($this->image_factory->getFirstImage());
-        $this->buildViewPhoto();
+        $this->buildView();
     }
 
     public function last()
     {
         $this->buildDataImage($this->image_factory->getLastImage());
-        $this->buildViewPhoto();
+        $this->buildView();
     }
 
     public function next()
     {
         $id = $this->getImageIdFromUrl();
         $this->buildDataImage($this->image_factory->getNextImageById($id));
-        $this->buildViewPhoto();
+        $this->buildView();
     }
 
     public function previous()
     {
         $id = $this->getImageIdFromUrl();
         $this->buildDataImage($this->image_factory->getPreviousImageById($id));
-        $this->buildViewPhoto();
+        $this->buildView();
     }
 
     protected function getImageIdFromUrl()
@@ -85,7 +85,7 @@ class Photo
         $this->data->image_id  = $image->getId();
     }
 
-    private function buildViewPhoto()
+    protected function buildView()
     {
         $this->data->content = "photoView.php";
         $this->data->menu    = $this->buildMenu();

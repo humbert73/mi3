@@ -27,7 +27,7 @@ class PhotoMatrix extends Photo
         return 'PhotoMatrix';
     }
 
-    public function buildMatrixViewPhoto()
+    protected function buildView()
     {
         $this->data->content = "photoMatrixView.php";
         $this->data->menu    = $this->buildMenu();
@@ -40,14 +40,14 @@ class PhotoMatrix extends Photo
     {
         $this->recupUrlData();
         $this->data->nb_image = $this->moreNbImage($this->data->nb_image);
-        $this->buildMatrixViewPhoto();
+        $this->buildView();
     }
 
     public function less()
     {
         $this->recupUrlData();
         $this->data->nb_image = $this->lessNbImage($this->data->nb_image);
-        $this->buildMatrixViewPhoto();
+        $this->buildView();
     }
 
     protected function recupUrlData()
