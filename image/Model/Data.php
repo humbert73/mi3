@@ -12,7 +12,8 @@ class Data
     public $content;
     public $image_url;
     public $image_id;
-    public $size = 480;
-    public $zoom = 1;
-    public $nbImg;
+    public $size     = 480;
+    public $zoom     = 1;
+    public $nb_image = 1;
+    public $images_urls;
 }

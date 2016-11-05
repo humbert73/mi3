@@ -12,17 +12,8 @@
     </div>
     <p></p>
     <?php
-
-        foreach($this->more() as $i_Url){
-
-            var_dump ('url Matrix '.$i_Url);
-            ?><a href="<?php echo $i_Url ?>"><img src="<?php echo $i_Url ?>" width="<?php echo $this->data->size ?>"></a>
-            <?php
-
+        foreach($this->images_urls as $image_url){
+            echo '<a href="' . $image_url . '"><img class="img-thumbnail" src="' . $image_url . '" width="' . $this->data->size . '"></a>' . PHP_EOL;
         }
     ?>
 </div>
-
-
-
-

@@ -6,7 +6,7 @@ class ImageFactory
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # A MODIFIER EN FONCTION DE VOTRE INSTALLATION
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    const URL_IMAGE_PATH = "http://localhost/mi3/mi3/image/Model/IMG/";
+    const URL_IMAGE_PATH = "http://localhost/mi3/image/Model/IMG/";
 
     private $image_dao;
 
@@ -77,28 +77,31 @@ class ImageFactory
 
     public function jumpToImage(image $img, $nb)
     {
-        $id = $img->getId();
+        $id     = $img->getId();
         $nextId = $id + $nb;
         if ($nextId >= 1 && $nextId <= $this->image_dao->size()) {
             $img = $this->image_dao->getImage($nextId);
         }
+
         return $img;
     }
 
-    # Retourne la liste des images consécutives à partir d'une image
-//    public function getImageList(image $img, $nb)
-//    {
-//        # Verifie que le nombre d'image est non nul
-//        if (!$nb > 0) {
-//            debug_print_backtrace();
-//            trigger_error("Erreur dans ImageDAO.getImageList: nombre d'images nul");
-//        }
-//        $id = $img->getId();
-//        $max = $id + $nb;
-//        while ($id < $this->image_dao->size() && $id < $max) {
-//            $res[] = $this->getImageById($id);
-//            $id++;
-//        }
-//        return $res;
-//    }
+    public function getImagesByNbImage($image_id, $nb_image)
+    {
+        # Verifie que le nombre d'image est non nul
+        if (!$nb_image > 0) {
+            debug_print_backtrace();
+            trigger_error("Erreur dans ImageDAO.getImageList: nombre d'images nul");
+        }
+
+        $max_id = $image_id + $nb_image;
+        $images = array();
+
+        while ($image_id < $this->image_dao->size() && $image_id < $max_id) {
+            $images[] = $this->image_dao->getImage($image_id);
+            $image_id++;
+        }
+
+        return $images;
+    }
 }

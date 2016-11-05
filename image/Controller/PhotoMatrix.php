@@ -6,105 +6,81 @@
  * Date: 20/10/16
  * Time: 09:48
  */
-require_once ('Photo.php');
+require_once('Photo.php');
 
-class PhotoMatrix extends Photo {
-
-    protected $nbImg;
+class PhotoMatrix extends Photo
+{
+    public $images_urls;
 
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function buildMenu()
+    protected function buildAdditionalUrlImageInfo()
     {
-        $index            = 'index.php';
-        $controller_photo = '?controller=Photo';
-        $controller_photoMatrix = '?controller=PhotoMatrix';
-        $image_info       = $this->buildAdditionalUrlImageInfo();
-        $image_infoMatrix = $this->buildAdditionalUrlImageMatrixInfo();
-        $menu             = array(
-            'Home'     => $index,
-            'A propos' => $index.'?action=displayAPropos',
-            'First'    => $index.$controller_photo.'&action=first'.$image_info,
-            'Random'   => $index.$controller_photo.'&action=random'.$image_info,
-            'Zoom +'   => $index.$controller_photo.'&action=zoomPlus'.$image_info,
-            'Zoom -'   => $index.$controller_photo.'&action=zoomMinus'.$image_info,
-            'More' => $index.$controller_photoMatrix.'&action=more'.$image_infoMatrix,
-            'Less' => $index.$controller_photoMatrix.'&action=less'.$image_infoMatrix,
-        );
-
-             return $menu;
+        return parent::buildAdditionalUrlImageInfo().'&nbImg='.$this->data->nb_image;
     }
 
-    protected function buildAdditionalUrlImageMatrixInfo()
+    protected function getController()
     {
-        return '&id='.$this->data->image_id.'&size='.$this->data->size.'&nbImg='.$this->data->nbImg;
-    }
-
-    protected function getImageNbImgFromUrl()
-    {
-
-        if (isset($_GET["nbImg"])) {
-            $nbImg = $_GET["nbImg"];
-        }
-
-        return $nbImg;
-    }
-
-    protected function moreNbImg($nbImg)
-    {
-        $newMoreNbImg = $nbImg * 2;
-        return $newMoreNbImg;
-    }
-
-    protected function lessNbImg($nbImg)
-    {
-        $newLessNbImg = $nbImg / 2;
-        return $newLessNbImg;
+        return 'PhotoMatrix';
     }
 
     public function buildMatrixViewPhoto()
     {
         $this->data->content = "photoMatrixView.php";
-        $this->data->menu = $this->buildMenu();
+        $this->data->menu    = $this->buildMenu();
+        $this->buildImagesUrls();
 
         $this->includeMainView();
     }
 
     public function more()
     {
-
-        $imageDAO = new ImageDAO();
-
-        //Extrait l'id de l'image en cours à partir de son URL
-        $id = $this->getImageIdFromUrl();
-
-        //Extrait le nombre d'image affiché
-        $this->nbImg = $this->getImageNbImgFromUrl();
-
-        //affecte le nouveau nombre d'images à $nbImg
-        $this->data->nbImg = $this->nbImg;
-        $this->data->image_id = $id;
-
-        // multiplie par 2 le nombre d'images
-        $nbImg = $this->moreNbImg($this->nbImg);
-
-        print_r($nbImg);
-        //Tableau des URLs des images à afficher à partir de leur id
-        $imgLst = $imageDAO->getImageList($id, $nbImg);
-
+        $this->recupUrlData();
+        $this->data->nb_image = $this->moreNbImage($this->data->nb_image);
         $this->buildMatrixViewPhoto();
-
-        //construit un tableau des URLs des images à afficher
-        foreach ($imgLst as $key => $image){
-
-            $imgMatrixURL [] = $imgLst[$key]->getURL();
-        }
-        
-        return $imgMatrixURL;
-
     }
 
+    public function less()
+    {
+        $this->recupUrlData();
+        $this->data->nb_image = $this->lessNbImage($this->data->nb_image);
+        $this->buildMatrixViewPhoto();
+    }
+
+    protected function recupUrlData()
+    {
+        parent::recupUrlData();
+        if (isset($_GET["nbImg"])) {
+            $nb_image = $_GET["nbImg"];
+            $this->data->nb_image = $nb_image;
+        }
+    }
+
+    private function moreNbImage($nb_image)
+    {
+        return $nb_image * 2;
+    }
+
+    private function lessNbImage($nb_image)
+    {
+        if ($nb_image > 1) {
+            $nb_image = $nb_image / 2;
+        }
+
+        return $nb_image;
+    }
+
+    private function buildImagesUrls()
+    {
+        $images     = $this->image_factory->getImagesByNbImage($this->data->image_id, $this->data->nb_image);
+        $images_url = array();
+
+        foreach ($images as $image) {
+            $images_url[] = $image->getURL();
+        }
+        $this->images_urls = $images_url;
+    }
 }
