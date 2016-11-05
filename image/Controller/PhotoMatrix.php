@@ -10,30 +10,12 @@ require_once('Photo.php');
 
 class PhotoMatrix extends Photo
 {
+    const CONTROLLER_NAME = 'PhotoMatrix';
     public $images_urls;
 
     public function __construct()
     {
         parent::__construct();
-    }
-
-    protected function buildAdditionalUrlImageInfo()
-    {
-        return parent::buildAdditionalUrlImageInfo().'&nbImg='.$this->data->nb_image;
-    }
-
-    protected function getController()
-    {
-        return 'PhotoMatrix';
-    }
-
-    protected function buildView()
-    {
-        $this->data->content = "photoMatrixView.php";
-        $this->data->menu    = $this->buildMenu();
-        $this->buildImagesUrls();
-
-        $this->includeMainView();
     }
 
     public function more()
@@ -43,11 +25,51 @@ class PhotoMatrix extends Photo
         $this->buildView();
     }
 
+    public function last()
+    {
+        $this->recupUrlData();
+        $this->data->image_id =  $this->image_factory->getLastImageId($this->data->nb_image);
+        $this->buildView();
+    }
+
     public function less()
     {
         $this->recupUrlData();
         $this->data->nb_image = $this->lessNbImage($this->data->nb_image);
         $this->buildView();
+    }
+
+    public function next()
+    {
+        $this->recupUrlData();
+        $this->data->image_id = $this->image_factory->getNextImageId($this->data->image_id, $this->data->nb_image);
+        $this->buildView();
+    }
+
+    public function previous()
+    {
+        $this->recupUrlData();
+        $this->data->image_id = $this->image_factory->getPreviousImageId($this->data->image_id, $this->data->nb_image);
+        $this->buildView();
+    }
+
+    protected function buildAdditionalUrlImageInfo()
+    {
+        return parent::buildAdditionalUrlImageInfo().'&nbImg='.$this->data->nb_image;
+    }
+
+    protected function getController()
+    {
+        return self::CONTROLLER_NAME;
+    }
+
+    protected function buildView()
+    {
+        $this->data->content = "photoMatrixView.php";
+        $this->data->menu    = $this->buildMenu();
+        $this->buildImagesUrls();
+
+        $this->includeMainView();
     }
 
     protected function recupUrlData()
@@ -82,5 +104,14 @@ class PhotoMatrix extends Photo
             $images_url[] = $image->getURL();
         }
         $this->images_urls = $images_url;
+    }
+
+    protected function getLinkForAction($action)
+    {
+        $params = [
+            "nbImg"         => $this->data->nb_image,
+        ];
+
+        return parent::getLinkForAction($action).'&'.http_build_query($params);
     }
 }

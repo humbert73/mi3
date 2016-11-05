@@ -6,6 +6,7 @@ require_once("Model/Data.php");
 
 class Photo
 {
+    const CONTROLLER_NAME = 'Photo';
     const ZOOM = 0.25;
     public $image_factory;
     public $data;
@@ -56,27 +57,27 @@ class Photo
 
     public function next()
     {
-        $id = $this->getImageIdFromUrl();
-        $this->buildDataImage($this->image_factory->getNextImageById($id));
+        $this->recupUrlData();
+        $this->buildDataImage($this->image_factory->getNextImageById($this->data->image_id));
         $this->buildView();
     }
 
     public function previous()
     {
-        $id = $this->getImageIdFromUrl();
-        $this->buildDataImage($this->image_factory->getPreviousImageById($id));
+        $this->recupUrlData();
+        $this->buildDataImage($this->image_factory->getPreviousImageById($this->data->image_id));
         $this->buildView();
     }
 
-    protected function getImageIdFromUrl()
-    {
-        $id = 1;
-        if (isset($_GET["id"])) {
-            $id = $_GET["id"];
-        }
-
-        return $id;
-    }
+//    protected function getImageIdFromUrl()
+//    {
+//        $id = 1;
+//        if (isset($_GET["id"])) {
+//            $id = $_GET["id"];
+//        }
+//
+//        return $id;
+//    }
 
     protected function buildDataImage(Image $image)
     {
@@ -116,12 +117,17 @@ class Photo
 
     protected function getController()
     {
-        return 'Photo';
+        return self::CONTROLLER_NAME;
     }
 
     protected function buildAdditionalUrlImageInfo()
     {
-        return '&id='.$this->data->image_id.'&size='.$this->data->size;
+        $params = [
+            "id"         => $this->data->image_id,
+            "size"       => $this->data->size
+        ];
+
+        return '&'.http_build_query($params);
     }
 
     protected function recupUrlData()
@@ -146,10 +152,10 @@ class Photo
         include("View/mainView.php");
     }
 
-    private function getLinkForAction($action)
+    protected function getLinkForAction($action)
     {
         $params = [
-            "controller" => "Photo",
+            "controller" => $this->getController(),
             "action"     => $action,
             "id"         => $this->data->image_id,
             "size"       => $this->data->size

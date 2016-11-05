@@ -34,7 +34,12 @@ class ImageFactory
 
     public function getLastImage()
     {
-        return $this->image_dao->getImage($this->getLastId());
+        return $this->image_dao->getImage($this->getLastImageId());
+    }
+
+    public function getLastImageId($nb_image = 1)
+    {
+        return $this->getLastId()-$nb_image+1;
     }
 
     private function getFirstId()
@@ -47,18 +52,32 @@ class ImageFactory
         return $this->image_dao->size();
     }
 
+    public function getNextImageId($id, $nb_image = 1)
+    {
+        if ($id + $nb_image <= $this->image_dao->size()) {
+            $id += $nb_image;
+        } else {
+            $id = $this->image_dao->size()-$nb_image+1;
+        }
+
+        return $id;
+    }
+
+    public function getPreviousImageId($id, $nb_image = 1)
+    {
+        if ($id - $nb_image >= 1) {
+            $id -= $nb_image;
+        }
+
+        return $id;
+    }
+
     /**
      * @return Image
      */
     public function getNextImageById($id)
     {
-        if ($id < $this->image_dao->size()) {
-            $image = $this->image_dao->getImage($id + 1);
-        } else {
-            $image = $this->image_dao->getImage($id);
-        }
-
-        return $image;
+        return $this->image_dao->getImage($this->getNextImageId($id));
     }
 
     /**
@@ -66,13 +85,7 @@ class ImageFactory
      */
     public function getPreviousImageById($id)
     {
-        if ($id > 1) {
-            $image = $this->image_dao->getImage($id - 1);
-        } else {
-            $image = $this->image_dao->getImage($id);
-        }
-
-        return $image;
+        return $this->image_dao->getImage($this->getPreviousImageId($id));
     }
 
     public function jumpToImage(image $img, $nb)
@@ -89,7 +102,7 @@ class ImageFactory
     public function getImagesByNbImage($image_id, $nb_image)
     {
         # Verifie que le nombre d'image est non nul
-        if (!$nb_image > 0) {
+        if (! $nb_image > 0) {
             debug_print_backtrace();
             trigger_error("Erreur dans ImageDAO.getImageList: nombre d'images nul");
         }
@@ -97,7 +110,7 @@ class ImageFactory
         $max_id = $image_id + $nb_image;
         $images = array();
 
-        while ($image_id < $this->image_dao->size() && $image_id < $max_id) {
+        while ($image_id <= $this->image_dao->size() && $image_id < $max_id) {
             $images[] = $this->image_dao->getImage($image_id);
             $image_id++;
         }
