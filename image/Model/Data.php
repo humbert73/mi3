@@ -10,6 +10,7 @@ class Data
 {
     public $menu;
     public $content;
+    public $header;
     public $image_url;
     public $image_id;
     public $size     = 480;

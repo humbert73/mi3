@@ -3,6 +3,7 @@
 require_once("Model/Image/Image.php");
 require_once("Model/Image/ImageDAO.php");
 require_once("Model/Data.php");
+require_once('Controller/Header.php');
 
 class Photo
 {
@@ -14,6 +15,7 @@ class Photo
     public function __construct()
     {
         $this->image_factory = new ImageFactory(new ImageDAO());
+        $this->header        = Header::Instance();
         $this->data          = new Data();
     }
 
@@ -88,6 +90,7 @@ class Photo
 
     protected function buildView()
     {
+        $this->data->header  = $this->header->getView();
         $this->data->content = "photoView.php";
         $this->data->menu    = $this->buildMenu();
 

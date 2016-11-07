@@ -65,6 +65,7 @@ class PhotoMatrix extends Photo
 
     protected function buildView()
     {
+        $this->data->header  = Header::VIEW;
         $this->data->content = "photoMatrixView.php";
         $this->data->menu    = $this->buildMenu();
         $this->buildImagesUrls();

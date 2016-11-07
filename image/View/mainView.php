@@ -7,7 +7,7 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-<?php include 'headerView.php' ?>
+<?php include($this->data->header); ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2">
@@ -28,9 +28,7 @@
         </div>
         <div class="col-md-10">
             <div class="panel panel-default">
-                <?php
-                include($this->data->content);
-                ?>
+                <?php include($this->data->content); ?>
             </div>
         </div>
     </div>
