@@ -27,12 +27,26 @@ class PhotoMatrix extends Photo
         $this->buildView();
     }
 
-    public function byCategory(){
+    public function displayByCategory(){
 
-        $this->image_factory->getCategory();
-        $this->recupUrlData();
-        $this->buildView();
-    }
+        if (isset ($_POST['choice_category'])){
+
+            $category = $_POST['choice_category'];
+
+            $images     = $this->image_DAO->getImageByCategory($category);
+            $images_url = array();
+
+            foreach ($images as $image) {
+
+                $images_url[] = $image->getURL();
+            }
+
+            $this->images_urls = $images_url;
+        }
+
+            $this->buildView();
+
+        }
 
     public function last()
     {
@@ -75,6 +89,7 @@ class PhotoMatrix extends Photo
 
     protected function buildView()
     {
+        $this->data->header  = Header::VIEW;
         $this->data->content = "photoMatrixView.php";
         $this->data->menu    = $this->buildMenu();
         $this->buildImagesUrls();
@@ -127,6 +142,5 @@ class PhotoMatrix extends Photo
 
         return parent::getLinkForAction($action).'&'.http_build_query($params);
     }
-
 
 }

@@ -97,23 +97,12 @@ class ImageDAO
         return $res;
     }
 
-    public function searchCategory()
+        public function searchCategory()
     {
-        $sql = "SELECT DISTINCT(category) FROM image";
-
-        $res = $this->db->query($sql);
-
-        if ($res) {
-
-            return $res;
-
-        } else {
-
-            print "Error in searchCategory<br/>";
-            $err = $this->db->errorInfo();
-            print $err[2] . "<br/>";
-        }
+        $sql = "SELECT DISTINCT(category) FROM image ";
+        return $this->db->query($sql);
     }
+
 
 }
 

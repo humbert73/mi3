@@ -10,6 +10,7 @@ class Data
 {
     public $menu;
     public $content;
+    public $header;
     public $image_url;
     public $image_id;
     public $size     = 480;
@@ -17,5 +18,6 @@ class Data
     public $nb_image = 1;
     public $images_urls;
     public $image_cat;
-    public $listCategory;
+    public $categories;
+
 }
