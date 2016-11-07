@@ -8,35 +8,21 @@
  */
 require_once('Controller/Home.php');
 require_once('Controller/SignUp.php');
+require_once('Model/Data.php');
 
 class Header {
-
-    /**
-     * @var Singleton
-     * @access private
-     * @static
-     */
-    private static $_instance = null;
-
     const VIEW = 'View/headerView.php';
+    private $data;
 
-    private function __construct() {
+    function __construct(Data $data) {
+        $this->data = $data;
+        $this->initData();
     }
 
-    /**
-     * Méthode qui crée l'unique instance de la classe
-     * si elle n'existe pas encore puis la retourne.
-     *
-     * @param void
-     * @return Header
-     */
-    public static function Instance() {
-
-        if(is_null(self::$_instance)) {
-            self::$_instance = new Header();
-        }
-
-        return self::$_instance;
+    private function initData()
+    {
+        $this->data->header = self::VIEW;
+        $this->data->sign_up_url = $this->getSignUpUrl();
     }
 
     public function getView()
@@ -44,10 +30,12 @@ class Header {
         return self::VIEW;
     }
 
-    public function getSignUpUrl()
+    private function getSignUpUrl()
     {
-        return Home::URL_PATH.'?'.http_build_query(array(
+        $sign_up_url = Home::URL_PATH.'?'.http_build_query(array(
             'controller' => SignUp::CONTROLLER_NAME
         ));
+
+        return $sign_up_url;
     }
 }
