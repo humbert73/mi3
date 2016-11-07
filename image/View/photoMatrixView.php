@@ -11,12 +11,12 @@
         ?>
         <form style="display: inline-block; margin-left: 20px;">
             <select  name="category">
-                <?php var_dump($this->getCategory()); ?>
                 <option value="default" selected>Choose your category</option>
-                <?php foreach ($this->getCategory() as $category){ ?>
+                <?php
+                foreach ($this->data->tabCategory as $value){
 
-                    <option value="value_cat"> <?php echo $category; ?></option>
-                   <?php }?>
+                    echo '<option value="category">'.$value.'</option>';
+                } ?>
             </select>
         </form>
     </div>

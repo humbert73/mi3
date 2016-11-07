@@ -29,6 +29,7 @@ class PhotoMatrix extends Photo
 
     public function byCategory(){
 
+        $this->image_factory->getCategory();
         $this->recupUrlData();
         $this->buildView();
     }
@@ -77,7 +78,6 @@ class PhotoMatrix extends Photo
         $this->data->content = "photoMatrixView.php";
         $this->data->menu    = $this->buildMenu();
         $this->buildImagesUrls();
-
         $this->includeMainView();
     }
 
@@ -127,4 +127,6 @@ class PhotoMatrix extends Photo
 
         return parent::getLinkForAction($action).'&'.http_build_query($params);
     }
+
+
 }

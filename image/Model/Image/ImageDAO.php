@@ -33,7 +33,8 @@ class ImageDAO
     }
 
     // Retourne les images appartenant à une catégorie
-    public function getImageByCategory ($category){
+    public function getImageByCategory($category)
+    {
 
         $sql = "SELECT * FROM image WHERE category = $category";
 
@@ -44,27 +45,12 @@ class ImageDAO
             return $this->createImageFromRow($this->getFirstRow($res));
 
         } else {
-            print "Error in getImageByCategory category = " . $category. "<br/>";
+            print "Error in getImageByCategory category = " . $category . "<br/>";
             $err = $this->db->errorInfo();
             print $err[2] . "<br/>";
         }
 
     }
-
-    /*public function getCategory(){
-
-        $sql = "SELECT DISTINCT category FROM image ";
-
-        $res = $this->db->query($sql);
-
-        $categories = array();
-        while ($row = $res->fetch()) {
-            $categories = $row['category'];
-        }
-
-        return $categories;
-
-    }*/
 
     # Retourne un objet image correspondant à l'identifiant
     public function getImage($id)
@@ -92,14 +78,15 @@ class ImageDAO
     }
 
     # Retourne la liste des images consécutives à partir d'une image
-    public function getImageList($id,$nb) {
+    public function getImageList($id, $nb)
+    {
         # Verifie que le nombre d'image est non nul
         if (!$nb > 0) {
             debug_print_backtrace();
             trigger_error("Erreur dans ImageDAO.getImageList: nombre d'images nul");
         }
 
-        $max = $id+$nb;
+        $max = $id + $nb;
 
         while ($id < $this->size() && $id < $max) {
 
@@ -112,11 +99,22 @@ class ImageDAO
 
     public function searchCategory()
     {
-        $sql = "SELECT DISTINCT category FROM image ";
+        $sql = "SELECT DISTINCT(category) FROM image";
 
+        $res = $this->db->query($sql);
 
-        return $this->db->query($sql);
+        if ($res) {
+
+            return $res;
+
+        } else {
+
+            print "Error in searchCategory<br/>";
+            $err = $this->db->errorInfo();
+            print $err[2] . "<br/>";
+        }
     }
+
 }
 
 

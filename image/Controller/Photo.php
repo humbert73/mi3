@@ -177,6 +177,8 @@ class Photo
 
     public function getCategory()
     {
-        $this->image_factory->getCategory();
+        $this->data->listCategory = $this->image_factory->getCategory();
+
+        return listCategory;
     }
 }
