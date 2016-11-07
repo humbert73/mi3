@@ -9,15 +9,13 @@
         echo '<a href="' . $this->getLinkForAction("next") . '" class="btn btn-primary">Next <span class="glyphicon glyphicon-triangle-right"></span></a>' . PHP_EOL;
         echo '<a href="' . $this->getLinkForAction("last") . '" class="btn btn-primary">Last <span class="glyphicon glyphicon-forward"></span></a>' . PHP_EOL;
         ?>
-        <form style="display: inline-block; margin-left: 20px;">
-            <select  name="category">
-                <?php var_dump($this->getCategory()); ?>
-                <option value="default" selected>Choose your category</option>
-                <?php foreach ($this->getCategory() as $category){ ?>
-
-                    <option value="value_cat"> <?php echo $category; ?></option>
-                   <?php }?>
-            </select>
+        <form>
+            <div class="form-group">
+                <select class="form-control" id="category">
+                    <?php foreach ($this->getCategory() as $id => $category) {
+                        echo '<option value="'.$id.'">'.$category.'</option>';
+                    }?>
+                </select>
         </form>
     </div>
     <p></p>

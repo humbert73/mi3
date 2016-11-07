@@ -180,6 +180,6 @@ class Photo
 
     public function getCategory()
     {
-        $this->image_factory->getCategory();
+        return $this->image_factory->getCategory();
     }
 }

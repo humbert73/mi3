@@ -18,4 +18,5 @@ class Data
     public $nb_image = 1;
     public $images_urls;
     public $image_cat;
+    public $categories;
 }
