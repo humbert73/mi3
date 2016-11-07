@@ -17,4 +17,5 @@ class Data
     public $zoom     = 1;
     public $nb_image = 1;
     public $images_urls;
+    public $image_cat;
 }

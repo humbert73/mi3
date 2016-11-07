@@ -12,6 +12,7 @@ class PhotoMatrix extends Photo
 {
     const CONTROLLER_NAME = 'PhotoMatrix';
     public $images_urls;
+    public $category;
 
     public function __construct()
     {
@@ -20,8 +21,15 @@ class PhotoMatrix extends Photo
 
     public function more()
     {
+        $this->data->zoom -= self::ZOOM;
         $this->recupUrlData();
         $this->data->nb_image = $this->moreNbImage($this->data->nb_image);
+        $this->buildView();
+    }
+
+    public function byCategory(){
+
+        $this->recupUrlData();
         $this->buildView();
     }
 
@@ -34,6 +42,7 @@ class PhotoMatrix extends Photo
 
     public function less()
     {
+        $this->data->zoom += self::ZOOM;
         $this->recupUrlData();
         $this->data->nb_image = $this->lessNbImage($this->data->nb_image);
         $this->buildView();
@@ -79,6 +88,10 @@ class PhotoMatrix extends Photo
         if (isset($_GET["nbImg"])) {
             $nb_image = $_GET["nbImg"];
             $this->data->nb_image = $nb_image;
+        }
+        if (isset($_GET["cat"])) {
+            $image_cat = $_GET["cat"];
+            $this->data->image_cat = $image_cat;
         }
     }
 

@@ -25,13 +25,46 @@ class ImageDAO
     {
         $sql = "SELECT count(*) as size FROM image";
         $res = $this->db->query($sql);
-
         if ($res) {
             $row = $this->getFirstRow($res);
         }
 
         return $row['size'];
     }
+
+    // Retourne les images appartenant à une catégorie
+    public function getImageByCategory ($category){
+
+        $sql = "SELECT * FROM image WHERE category = $category";
+
+        $res = $this->db->query($sql);
+
+        if ($res) {
+
+            return $this->createImageFromRow($this->getFirstRow($res));
+
+        } else {
+            print "Error in getImageByCategory category = " . $category. "<br/>";
+            $err = $this->db->errorInfo();
+            print $err[2] . "<br/>";
+        }
+
+    }
+
+    /*public function getCategory(){
+
+        $sql = "SELECT DISTINCT category FROM image ";
+
+        $res = $this->db->query($sql);
+
+        $categories = array();
+        while ($row = $res->fetch()) {
+            $categories = $row['category'];
+        }
+
+        return $categories;
+
+    }*/
 
     # Retourne un objet image correspondant à l'identifiant
     public function getImage($id)
@@ -47,6 +80,7 @@ class ImageDAO
         }
     }
 
+    // Retourne une ligne
     private function getFirstRow($res)
     {
         return $res->fetch();
@@ -75,20 +109,16 @@ class ImageDAO
         }
         return $res;
     }
+
+    public function searchCategory()
+    {
+        $sql = "SELECT DISTINCT category FROM image ";
+
+
+        return $this->db->query($sql);
+    }
 }
 
 
-# Test unitaire
-# Appeler le code PHP depuis le navigateur avec la variable test
-# Exemple : http://localhost/image/Model/Image/ImageDAO.php?test
-//if (isset($_GET["test"])) {
-//    echo "<H1>Test de la classe ImageDAO</H1>";
-//    $imgDAO = new ImageDAO();
-//    echo "<p>Creation de l'objet ImageDAO.</p>\n";
-//    echo "<p>La base contient " . $imgDAO->size() . " images.</p>\n";
-//    echo "<p>Test de getImageId :";
-//    echo "La premiere image est : " . $imgDAO->getImage(1)->getURL() . "</p>\n";
-//    # Affiche l'image
-//    echo "<img src=\"" . $img->getURL() . "\"/>\n";
-//}
+
 

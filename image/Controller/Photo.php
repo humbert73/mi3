@@ -102,12 +102,13 @@ class Photo
         $index      = 'index.php';
         $controller = '?controller='.$this->getController();
         $image_info = $this->buildAdditionalUrlImageInfo();
+        $image_info_cat = $this->buildAdditionalUrlCategoryImageInfo();
         $menu       = array(
             'Home'     => $index,
             'A propos' => $index.'?action=apropos',
             'Random'   => $index.$controller.'&action=random'.$image_info,
             'Zoom +'   => $index.$controller.'&action=zoomPlus'.$image_info,
-            'Zoom -'   => $index.$controller.'&action=zoomMinus'.$image_info,
+            'Zoom -'   => $index.$controller.'&action=zoomMinus'.$image_info_cat,
         );
         if ($this->getController() === 'Photo') {
             $controller = $controller.'Matrix';
@@ -133,6 +134,11 @@ class Photo
         return '&'.http_build_query($params);
     }
 
+    protected function buildAdditionalUrlCategoryImageInfo()
+    {
+        return $this->buildAdditionalUrlImageInfo().'&cat='.$this->data->image_cat;
+    }
+
     protected function recupUrlData()
     {
         if (isset($_GET["id"])) {
@@ -148,6 +154,11 @@ class Photo
             $size             = $_GET["size"];
             $this->data->size = $size * $this->data->zoom;
         }
+//        if (isset($_GET["cat"])) {
+//            $image_cat           = $_GET["cat"];
+//            $this->data->image_cat  = $image_cat;
+//            $this->data->image_url = $this->image_factory->getCategory()->getImageByCategory($image_cat)->getURL();
+//        }
     }
 
     protected function includeMainView()
@@ -165,5 +176,10 @@ class Photo
         ];
 
         return 'index.php?'.http_build_query($params);
+    }
+
+    public function getCategory()
+    {
+        $this->image_factory->getCategory();
     }
 }
