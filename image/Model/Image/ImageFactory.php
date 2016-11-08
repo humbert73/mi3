@@ -127,4 +127,21 @@ class ImageFactory
         }
         return $categories;
     }
+
+    // Retourne les images appartenant à une catégorie
+    public function getImageByCategory($category)
+    {
+        $res = $this->image_dao->getImageByCategory($category);
+
+        if ($res) {
+
+            return $this->image_dao->createImageFromRow($this->image_dao->getFirstRow($res));
+
+        } else {
+            print "Error in getImageByCategory category = " . $category . "<br/>";
+            $err = $this->db->errorInfo();
+            print $err[2] . "<br/>";
+        }
+
+    }
 }

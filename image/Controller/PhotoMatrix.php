@@ -33,7 +33,10 @@ class PhotoMatrix extends Photo
 
             $category = $_POST['choice_category'];
 
-            $images     = $this->image_DAO->getImageByCategory($category);
+            var_dump($category);
+
+            $images     = $this->image_factory->getImageByCategory($category);
+
             $images_url = array();
 
             foreach ($images as $image) {
@@ -41,10 +44,11 @@ class PhotoMatrix extends Photo
                 $images_url[] = $image->getURL();
             }
 
+            var_dump($images_url);
             $this->images_urls = $images_url;
-        }
 
             $this->buildView();
+            }
 
         }
 
