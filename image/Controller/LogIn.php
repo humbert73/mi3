@@ -12,9 +12,9 @@ require_once('Model/User/UserDAO.php');
 require_once('Controller/Header.php');
 
 
-class SignUp
+class LogIn
 {
-    const CONTROLLER_NAME = 'SignUp';
+    const CONTROLLER_NAME = 'LogIn';
     public $data;
     public $user;
 
@@ -27,15 +27,17 @@ class SignUp
 
     public function index()
     {
-        $this->buildView("SignUpView.php");
+        $this->buildView("LogInView.php");
     }
 
-    public function signUp()
+    public function LogIn()
     {
-        if ($this->addUser()){
+        $user = $this->getUser();
+        if (isset($user)) {
+            $_SESSION['user']=$user;
             $this->data->sign_up_has_succed = true;
         }
-        $this->buildView("SignUpView.php");
+        $this->buildView("LogInView.php");
     }
 
     public function buildView($name_view)
@@ -59,11 +61,10 @@ class SignUp
         );
     }
 
-    private function addUser()
+    private function getUser()
     {
         if (isset($_POST['name']) && isset($_POST['pwd'])) {
-            $user = new User($_POST['name'], $_POST['pwd']);
-            return $this->user_dao->addUser($user);
+            return $this->user_dao->getUser($_POST['name'], $_POST['pwd']);
         } else {
             return false;
         }

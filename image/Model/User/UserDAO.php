@@ -34,21 +34,23 @@ class UserDAO
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':password', $password);
 
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            var_dump($stmt->errorInfo()); die();
-        }
+        return $stmt->execute();
     }
 
-    public function getUser($id)
+    public function getUser($name, $password)
     {
-        $sql = "SELECT * FROM image WHERE id = $id";
-        $res = $this->db->query($sql);
+        $sql = 'SELECT name, password
+                FROM user
+                WHERE name = :name AND password = :password';
+
+        $sth = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $sth->execute(array(':name' => $name, ':password' => $password));
+        $res = $sth->fetch();
+
         if ($res) {
-            return $this->createImageFromRow($this->getFirstRow($res));
+            return new User($res['name'], $res['password']);
         } else {
-            print "Error in getImage. id=".$id."<br/>";
+            print "Error with user: ".$name."<br/>";
             $err = $this->db->errorInfo();
             print $err[2]."<br/>";
         }

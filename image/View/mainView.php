@@ -21,6 +21,9 @@
                         foreach ($this->data->menu as $item => $act) {
                             print "<li><a href=\"$act\">$item</a></li>\n";
                         }
+                        if (isset($_SESSION['user'])) {
+                            print '<li><a href="index.php?controller=Upload">Upload</a></li>';
+                        }
                         ?>
                     </ul>
                 </div>
