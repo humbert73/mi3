@@ -15,8 +15,8 @@ class Photo
     public function __construct()
     {
         $this->image_factory = new ImageFactory(new ImageDAO());
-        $this->header        = Header::Instance();
         $this->data          = new Data();
+        $this->header        = new Header($this->data);
     }
 
     public function index()
@@ -90,7 +90,6 @@ class Photo
 
     protected function buildView()
     {
-        $this->data->header  = $this->header->getView();
         $this->data->content = "photoView.php";
         $this->data->menu    = $this->buildMenu();
 

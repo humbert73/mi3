@@ -9,11 +9,12 @@ class Home
 
     const URL_PATH = "http://localhost/mi3/image/index.php";
     public $data;
+    public $header;
 
     public function __construct()
     {
-        $this->header = Header::Instance();
         $this->data   = new Data();
+        $this->header = new Header($this->data);
     }
 
     public function index()
@@ -28,7 +29,6 @@ class Home
 
     public function buildView($name_view)
     {
-        $this->data->header  = $this->header->getView();
         $this->data->content = $name_view;
         $this->data->menu    = $this->buildMenu();
         $this->includeMainView();

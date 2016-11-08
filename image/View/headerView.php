@@ -5,8 +5,8 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="<?php $this->header->getSignUpUrl() ?>"><span class="glyphicon glyphicon-user"></span> S'inscrire</a></li>
-                <li><a href="<?php $this->header->getSignUpUrl() ?>"><span class="glyphicon glyphicon-log-in"></span> Se connecter</a></li>
+                <li><a href="<?php echo $this->data->sign_up_url; ?>"><span class="glyphicon glyphicon-user"></span> S'inscrire</a></li>
+                <li><a href="<?php echo $this->data->sign_up_url; ?>"><span class="glyphicon glyphicon-log-in"></span> Se connecter</a></li>
             </ul>
         </div>
     </div>
