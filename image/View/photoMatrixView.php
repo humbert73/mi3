@@ -12,10 +12,10 @@
     </div>
     <div style="margin-top : 20px; border: 1px solid #cecece; border-radius: 5px; width:30%; padding:5px; background-color: #337ab7;">
         <form style="display:flex; width: 80%; margin-left: 20px;" method="post" enctype="multipart/form-data" action="index.php?controller=PhotoMatrix&action=displayByCategory">
-            <select style="border-color:#000; cursor:pointer; display:inline;" class="form-control" id="category">
+            <select style="border-color:#000; cursor:pointer; display:inline;" class="form-control" id="category" name="choiceCategory" >
                 <option value="default" selected>Choose category</option>
                 <?php foreach ($this->getCategory() as $id => $category) {
-                    echo '<option name="choiceCategory" value="'.$id.'">'.$category.'</option>';
+                    echo '<option value="'.$category.'">'.$category.'</option>';
                 }?>
             </select>
             <input style="display:block; margin-left:2%;" name="submitChoiceCategory" type="submit" value="Go"/>

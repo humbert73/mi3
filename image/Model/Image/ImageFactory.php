@@ -133,15 +133,13 @@ class ImageFactory
     {
         $res = $this->image_dao->getImageByCategory($category);
 
-        if ($res) {
+        while($row = $res -> fetch()){
 
-            return $this->image_dao->createImageFromRow($this->image_dao->getFirstRow($res));
-
-        } else {
-            print "Error in getImageByCategory category = " . $category . "<br/>";
-            $err = $this->db->errorInfo();
-            print $err[2] . "<br/>";
+            $images[$row['id']] = $this->image_dao->createImageFromRow($row);
         }
+
+        return $images;
+
     }
 
     public function addImage($link, $category, $comment)

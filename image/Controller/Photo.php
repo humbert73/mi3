@@ -71,16 +71,6 @@ class Photo
         $this->buildView();
     }
 
-//    protected function getImageIdFromUrl()
-//    {
-//        $id = 1;
-//        if (isset($_GET["id"])) {
-//            $id = $_GET["id"];
-//        }
-//
-//        return $id;
-//    }
-
     protected function buildDataImage(Image $image)
     {
         $this->recupUrlData();
@@ -143,23 +133,18 @@ class Photo
     protected function recupUrlData()
     {
         if (isset($_GET["id"])) {
-            $image_id              = $_GET["id"];
-            $this->data->image_id  = $image_id;
+            $image_id = $_GET["id"];
+            $this->data->image_id = $image_id;
             $this->data->image_url = $this->image_factory->getImageById($image_id)->getURL();
         }
         if (isset($_GET["zoom"])) {
-            $zoom             = $_GET["zoom"];
+            $zoom = $_GET["zoom"];
             $this->data->zoom = $zoom;
         }
         if (isset($_GET["size"])) {
-            $size             = $_GET["size"];
+            $size = $_GET["size"];
             $this->data->size = $size * $this->data->zoom;
         }
-//        if (isset($_GET["cat"])) {
-//            $image_cat           = $_GET["cat"];
-//            $this->data->image_cat  = $image_cat;
-//            $this->data->image_url = $this->image_factory->getCategory()->getImageByCategory($image_cat)->getURL();
-//        }
     }
 
     protected function includeMainView()

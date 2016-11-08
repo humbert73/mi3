@@ -29,28 +29,33 @@ class PhotoMatrix extends Photo
 
     public function displayByCategory(){
 
-        if (isset ($_POST['choice_category']) && $_POST['choice_category'] != 'default'){
+        if(isset ($_POST['submitChoiceCategory'])){
 
-            $category = $_POST['choice_category'];
+            if (isset ($_POST['choice_category']) && $_POST['choice_category'] != 'default'){
 
-            var_dump($category);
-            echo 'test';
+                $category = $_POST['choice_category'];
 
-            $images     = $this->image_factory->getImageByCategory($category);
+                $images     = $this->image_factory->getImageByCategory($category);
 
-            $images_url = array();
+                $images_url = array();
 
-            foreach ($images as $image) {
+                foreach ($images as $image) {
 
-                $images_url[] = $image->getURL();
+                    $images_url[] = $image->getURL();
+                }
+
+                $this->images_urls = $images_url;
+
             }
 
-            $this->images_urls = $images_url;
-
-            $this->buildView();
-            }
+            $this->data->content = "photoMatrixView.php";
+            $this->data->menu    = $this->buildMenu();
+            $this->includeMainView();
 
         }
+
+
+    }
 
     public function last()
     {
