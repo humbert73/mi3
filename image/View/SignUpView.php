@@ -10,9 +10,9 @@
 <?php } else { ?>
   <form class="form-horizontal" action="index.php?controller=SignUp&action=signUp" method="post">
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="email">Address mail :</label>
+        <label class="col-sm-2 control-label" for="name">Nom :</label>
         <div class="col-sm-4">
-          <input name="email" type="email" class="form-control" id="email">
+          <input name="name" type="text" class="form-control" id="name">
         </div>
       </div>
       <div class="form-group">
