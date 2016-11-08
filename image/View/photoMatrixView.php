@@ -21,7 +21,7 @@
     <p></p>
     <?php
         foreach($this->images_urls as $image_url){
-            echo '<a style=" display:inline-block; margin-bottom:3px;" href="' . $image_url . '"><img src="' . $image_url . '" height="' . $this->data->size . '"></a>' . PHP_EOL;
+            echo '<a style=" display:inline-block; margin-bottom:3px;" href="' . $image_url . '"><img src="' . $image_url . '" height="' . $this->data->size . '" width="' . $this->data->size . '"></a>' . PHP_EOL;
         }
     ?>
 </div>
