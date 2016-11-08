@@ -54,7 +54,7 @@ class ImageDAO
 
     public function createImageFromRow($row)
     {
-        return new Image($row['id'], ImageFactory::URL_IMAGE_PATH.$row['path']);
+        return new Image($row['id'], ImageFactory::URL_IMAGE_PATH.$row['path'], $row['comment'], $row['category']);
     }
 
     # Retourne la liste des images consécutives à partir d'une image

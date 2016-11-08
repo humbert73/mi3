@@ -10,8 +10,15 @@ class Data
 {
     public $menu;
     public $content;
+
+    //IMAGE
     public $image_url;
     public $image_id;
+    public $image_comment;
+    public $image_category;
+
+
+    //IMAGE FOR URLs
     public $size     = 480;
     public $zoom     = 1;
     public $nb_image = 1;
