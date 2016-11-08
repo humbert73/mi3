@@ -121,13 +121,10 @@ class ImageFactory
     public function getCategory()
     {
         $dar = $this->image_dao->searchCategory();
-
         $categories = array();
         foreach ($dar as $row) {
             $categories[] = $row['category'];
         }
-
         return $categories;
-
     }
 }
