@@ -22,4 +22,5 @@ class Data
     //HEADER
     public $header;
     public $sign_up_url;
+    public $sign_up_has_succed;
 }

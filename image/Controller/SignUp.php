@@ -27,6 +27,12 @@ class SignUp
         $this->buildView("SignUpView.php");
     }
 
+    public function signUp()
+    {
+        $this->data->sign_up_has_succed = true;
+        $this->buildView("SignUpView.php");
+    }
+
     public function buildView($name_view)
     {
         $this->data->content = $name_view;
