@@ -32,26 +32,6 @@ class ImageDAO
         return $row['size'];
     }
 
-    // Retourne les images appartenant à une catégorie
-    public function getImageByCategory($category)
-    {
-
-        $sql = "SELECT * FROM image WHERE category = $category";
-
-        $res = $this->db->query($sql);
-
-        if ($res) {
-
-            return $this->createImageFromRow($this->getFirstRow($res));
-
-        } else {
-            print "Error in getImageByCategory category = " . $category . "<br/>";
-            $err = $this->db->errorInfo();
-            print $err[2] . "<br/>";
-        }
-
-    }
-
     # Retourne un objet image correspondant à l'identifiant
     public function getImage($id)
     {
@@ -67,12 +47,12 @@ class ImageDAO
     }
 
     // Retourne une ligne
-    private function getFirstRow($res)
+    public function getFirstRow($res)
     {
         return $res->fetch();
     }
 
-    private function createImageFromRow($row)
+    public function createImageFromRow($row)
     {
         return new Image($row['id'], ImageFactory::URL_IMAGE_PATH . $row['path']);
     }
@@ -100,6 +80,14 @@ class ImageDAO
         public function searchCategory()
     {
         $sql = "SELECT DISTINCT(category) FROM image ";
+
+        return $this->db->query($sql);
+    }
+
+    public function getImageByCategory($category)
+    {
+        $sql = "SELECT * FROM image WHERE category = $category";
+
         return $this->db->query($sql);
     }
 

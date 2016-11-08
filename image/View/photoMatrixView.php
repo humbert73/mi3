@@ -9,14 +9,13 @@
         echo '<a href="' . $this->getLinkForAction("next") . '" class="btn btn-primary">Next <span class="glyphicon glyphicon-triangle-right"></span></a>' . PHP_EOL;
         echo '<a href="' . $this->getLinkForAction("last") . '" class="btn btn-primary">Last <span class="glyphicon glyphicon-forward"></span></a>' . PHP_EOL;
         ?>
-        <form style="display: inline-block; margin-left: 20px;" method="post" action="../index.php?controller=PhotoMatrix&action=displayByCategory()">
+        <form style="display: inline-block; margin-left: 20px;" method="post" action="../index.php?controller=PhotoMatrix&action=displayByCategory">
             <select style="border-color:#000; cursor:pointer;" class="form-control" id="category">
                 <option value="default" selected>Choose category</option>
                 <?php foreach ($this->getCategory() as $id => $category) {
                     echo '<option name="choiceCategory" value="'.$id.'">'.$category.'</option>';
                 }?>
             </select>
-
         </form>
     </div>
     <p></p>
