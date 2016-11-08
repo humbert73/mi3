@@ -18,7 +18,9 @@ class Data
     public $images_urls;
     public $image_cat;
     public $categories;
+
+    //HEADER
     public $header;
     public $sign_up_url;
-
+    public $sign_up_has_succed;
 }
