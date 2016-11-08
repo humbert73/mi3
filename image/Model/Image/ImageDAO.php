@@ -9,14 +9,14 @@ class ImageDAO
 
     function __construct()
     {
-        $dsn = 'sqlite:DB/image.db';
+        $dsn  = 'sqlite:DB/image.db';
         $user = '';
         $pass = '';
 
         try {
             $this->db = new PDO($dsn, $user, $pass);
         } catch (PDOException $e) {
-            die ("Erreur : " . $e->getMessage());
+            die ("Erreur : ".$e->getMessage());
         }
     }
 
@@ -40,9 +40,9 @@ class ImageDAO
         if ($res) {
             return $this->createImageFromRow($this->getFirstRow($res));
         } else {
-            print "Error in getImage. id=" . $id . "<br/>";
+            print "Error in getImage. id=".$id."<br/>";
             $err = $this->db->errorInfo();
-            print $err[2] . "<br/>";
+            print $err[2]."<br/>";
         }
     }
 
@@ -54,7 +54,7 @@ class ImageDAO
 
     public function createImageFromRow($row)
     {
-        return new Image($row['id'], ImageFactory::URL_IMAGE_PATH . $row['path']);
+        return new Image($row['id'], ImageFactory::URL_IMAGE_PATH.$row['path']);
     }
 
     # Retourne la liste des images consécutives à partir d'une image
@@ -74,10 +74,11 @@ class ImageDAO
 
             $id++;
         }
+
         return $res;
     }
 
-        public function searchCategory()
+    public function searchCategory()
     {
         $sql = "SELECT DISTINCT(category) FROM image ";
 
@@ -91,7 +92,17 @@ class ImageDAO
         return $this->db->query($sql);
     }
 
+    public function createImage($link, $category, $comment)
+    {
+        $new_id = $this->size() + 1;
+        $stmt   = $this->db->prepare("INSERT INTO image VALUES (:id, :path, :category, :comment)");
+        $stmt->bindParam(':id', $new_id);
+        $stmt->bindParam(':path', $link);
+        $stmt->bindParam(':category', $category);
+        $stmt->bindParam(':comment', $comment);
 
+        return $stmt->execute();
+    }
 }
 
 

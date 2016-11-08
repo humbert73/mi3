@@ -1,9 +1,9 @@
 <div class="panel-heading">
-  <h2 class="panel-title">Connexion</h2>
+  <h2 class="panel-title">Upload</h2>
 </div>
 <div class="panel-body">
   <div class="container">
-<?php if (isset($this->data->log_in_has_succed)) { ?>
+<?php if (isset($this->data->upload_has_succed)) { ?>
   <div class="alert alert-success">
     <strong>Connexion réussite</strong>
   </div>
@@ -29,7 +29,7 @@
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-8">
-          <button type="submit" class="btn btn-default">Uploader</button>
+          <button type="submit" class="btn btn-default">Importer</button>
         </div>
       </div>
     </form>
