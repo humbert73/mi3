@@ -29,11 +29,12 @@ class PhotoMatrix extends Photo
 
     public function displayByCategory(){
 
-        if (isset ($_POST['choice_category'])){
+        if (isset ($_POST['choice_category']) && $_POST['choice_category'] != 'default'){
 
             $category = $_POST['choice_category'];
 
             var_dump($category);
+            echo 'test';
 
             $images     = $this->image_factory->getImageByCategory($category);
 
@@ -44,7 +45,6 @@ class PhotoMatrix extends Photo
                 $images_url[] = $image->getURL();
             }
 
-            var_dump($images_url);
             $this->images_urls = $images_url;
 
             $this->buildView();
