@@ -8,7 +8,7 @@ require_once('Controller/Header.php');
 class Photo
 {
     const CONTROLLER_NAME = 'Photo';
-    const ZOOM = 0.25;
+    const ZOOM            = 0.25;
     public $image_factory;
     public $data;
 
@@ -84,8 +84,10 @@ class Photo
     protected function buildDataImage(Image $image)
     {
         $this->recupUrlData();
-        $this->data->image_url = $image->getURL();
-        $this->data->image_id  = $image->getId();
+        $this->data->image_url      = $image->getURL();
+        $this->data->image_id       = $image->getId();
+        $this->data->image_comment  = $image->getComment();
+        $this->data->image_category = $image->getCategory();
     }
 
     protected function buildView()
@@ -98,11 +100,11 @@ class Photo
 
     protected function buildMenu()
     {
-        $index      = 'index.php';
-        $controller = '?controller='.$this->getController();
-        $image_info = $this->buildAdditionalUrlImageInfo();
+        $index          = 'index.php';
+        $controller     = '?controller='.$this->getController();
+        $image_info     = $this->buildAdditionalUrlImageInfo();
         $image_info_cat = $this->buildAdditionalUrlCategoryImageInfo();
-        $menu       = array(
+        $menu           = array(
             'Home'     => $index,
             'A propos' => $index.'?action=apropos',
             'Random'   => $index.$controller.'&action=random'.$image_info,
@@ -126,8 +128,8 @@ class Photo
     protected function buildAdditionalUrlImageInfo()
     {
         $params = [
-            "id"         => $this->data->image_id,
-            "size"       => $this->data->size
+            "id"   => $this->data->image_id,
+            "size" => $this->data->size
         ];
 
         return '&'.http_build_query($params);

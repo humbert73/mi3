@@ -142,6 +142,10 @@ class ImageFactory
             $err = $this->db->errorInfo();
             print $err[2] . "<br/>";
         }
+    }
 
+    public function addImage($link, $category, $comment)
+    {
+        return $this->image_dao->createImage($link, $category, $comment);
     }
 }

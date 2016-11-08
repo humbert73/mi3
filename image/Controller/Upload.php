@@ -65,8 +65,8 @@ class Upload
 
     private function addImage()
     {
-        if (isset($_POST['name']) && isset($_POST['pwd'])) {
-            return $this->user_dao->getUser($_POST['name'], $_POST['pwd']);
+        if (isset($_POST['link']) && isset($_POST['category']) && isset($_POST['comment'])) {
+            return $this->image_factory->addImage($_POST['link'], $_POST['category'], $_POST['comment']);
         } else {
             return false;
         }

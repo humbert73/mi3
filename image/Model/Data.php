@@ -10,8 +10,15 @@ class Data
 {
     public $menu;
     public $content;
+
+    //IMAGE
     public $image_url;
     public $image_id;
+    public $image_comment;
+    public $image_category;
+
+
+    //IMAGE FOR URLs
     public $size     = 480;
     public $zoom     = 1;
     public $nb_image = 1;
@@ -25,4 +32,7 @@ class Data
     public $sign_up_has_succed;
     public $log_in_url;
     public $log_in_has_succed;
+
+    //FEEDBACK
+    public $success;
 }

@@ -3,9 +3,9 @@
 </div>
 <div class="panel-body">
   <div class="container">
-<?php if (isset($this->data->log_in_has_succed)) { ?>
+<?php if (isset($this->data->success)) { ?>
   <div class="alert alert-success">
-    <strong>Connexion réussite</strong>
+    <strong>Action effectuer avec succès</strong>
   </div>
 <?php } else { ?>
   <form class="form-horizontal" action="index.php?controller=LogIn&action=logIn" method="post">

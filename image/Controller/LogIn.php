@@ -40,6 +40,13 @@ class LogIn
         $this->buildView("LogInView.php");
     }
 
+    public function LogOut()
+    {
+        session_destroy();
+        $this->data->success = true;
+        $this->buildView("LogInView.php");
+    }
+
     public function buildView($name_view)
     {
         $this->data->content = $name_view;
