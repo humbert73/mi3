@@ -21,47 +21,20 @@ class PhotoMatrix extends Photo
 
     public function more()
     {
-        $this->data->zoom -= self::ZOOM;
         $this->recupUrlData();
         $this->data->nb_image = $this->moreNbImage($this->data->nb_image);
         $this->buildView();
     }
 
-    public function displayByCategory(){
-
-        if (isset ($_POST['choice_category'])){
-
-            $category = $_POST['choice_category'];
-
-            var_dump($category);
-
-            $images     = $this->image_factory->getImageByCategory($category);
-
-            $images_url = array();
-
-            foreach ($images as $image) {
-
-                $images_url[] = $image->getURL();
-            }
-
-            var_dump($images_url);
-            $this->images_urls = $images_url;
-
-            $this->buildView();
-            }
-
-        }
-
     public function last()
     {
         $this->recupUrlData();
-        $this->data->image_id =  $this->image_factory->getLastImageId($this->data->nb_image);
+        $this->data->image_id = $this->image_factory->getLastImageId($this->data->nb_image);
         $this->buildView();
     }
 
     public function less()
     {
-        $this->data->zoom += self::ZOOM;
         $this->recupUrlData();
         $this->data->nb_image = $this->lessNbImage($this->data->nb_image);
         $this->buildView();
@@ -81,9 +54,22 @@ class PhotoMatrix extends Photo
         $this->buildView();
     }
 
+    public function displayByCategory()
+    {
+        $this->recupUrlData();
+        $this->data->image_id = 1;
+        $this->buildView();
+    }
+
     protected function buildAdditionalUrlImageInfo()
     {
-        return parent::buildAdditionalUrlImageInfo().'&nbImg='.$this->data->nb_image;
+        $params = array(
+            'nbImg' => $this->data->nb_image
+        );
+        if (isset($this->data->image_category)) {
+            $params[] = $this->data->image_category;
+        }
+        return parent::buildAdditionalUrlImageInfo().'&'.http_build_query($params);
     }
 
     protected function getController()
@@ -93,8 +79,9 @@ class PhotoMatrix extends Photo
 
     protected function buildView()
     {
-        $this->data->content = "photoMatrixView.php";
-        $this->data->menu    = $this->buildMenu();
+        $this->data->content    = "photoMatrixView.php";
+        $this->data->menu       = $this->buildMenu();
+        $this->data->categories = $this->image_factory->getCategories();
         $this->buildImagesUrls();
         $this->includeMainView();
     }
@@ -103,12 +90,12 @@ class PhotoMatrix extends Photo
     {
         parent::recupUrlData();
         if (isset($_GET["nbImg"])) {
-            $nb_image = $_GET["nbImg"];
+            $nb_image             = $_GET["nbImg"];
             $this->data->nb_image = $nb_image;
         }
-        if (isset($_GET["cat"])) {
-            $image_cat = $_GET["cat"];
-            $this->data->image_cat = $image_cat;
+        if (isset($_POST["choiceCategory"])) {
+            $image_category             = $_POST["choiceCategory"];
+            $this->data->image_category = $image_category;
         }
     }
 
@@ -128,19 +115,30 @@ class PhotoMatrix extends Photo
 
     private function buildImagesUrls()
     {
-        $images     = $this->image_factory->getImagesByNbImage($this->data->image_id, $this->data->nb_image);
+        if ($this->hasCategorySelected()) {
+            $images = $this->image_factory->getImagesByCategory($this->data->image_category);
+        } else {
+            $images = $this->image_factory->getImagesByNbImage($this->data->image_id, $this->data->nb_image);
+        }
+
         $images_url = array();
 
         foreach ($images as $image) {
             $images_url[] = $image->getURL();
         }
-        $this->images_urls = $images_url;
+        $this->data->image_id = $images[0]->getId();
+        $this->images_urls    = $images_url;
+    }
+
+    private function hasCategorySelected()
+    {
+        return isset($this->data->image_category);
     }
 
     protected function getLinkForAction($action)
     {
         $params = [
-            "nbImg"         => $this->data->nb_image,
+            "nbImg" => $this->data->nb_image,
         ];
 
         return parent::getLinkForAction($action).'&'.http_build_query($params);

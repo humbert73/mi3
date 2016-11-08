@@ -118,9 +118,9 @@ class ImageFactory
         return $images;
     }
 
-    public function getCategory()
+    public function getCategories()
     {
-        $dar = $this->image_dao->searchCategory();
+        $dar = $this->image_dao->searchCategories();
         $categories = array();
         foreach ($dar as $row) {
             $categories[] = $row['category'];
@@ -129,19 +129,22 @@ class ImageFactory
     }
 
     // Retourne les images appartenant à une catégorie
-    public function getImageByCategory($category)
+    public function getImagesByCategory($category)
     {
-        $res = $this->image_dao->getImageByCategory($category);
+        $dar = $this->image_dao->searchImagesByCategory($category);
+        $images = array();
 
-        if ($res) {
-
-            return $this->image_dao->createImageFromRow($this->image_dao->getFirstRow($res));
-
+        if ($dar) {
+            foreach ($dar as $row) {
+                $images[] = $this->image_dao->createImageFromRow($row);
+            }
         } else {
             print "Error in getImageByCategory category = " . $category . "<br/>";
-            $err = $this->db->errorInfo();
+            $err = $this->image_dao->db->errorInfo();
             print $err[2] . "<br/>";
         }
+
+        return $images;
     }
 
     public function addImage($link, $category, $comment)
