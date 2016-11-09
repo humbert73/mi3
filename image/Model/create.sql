@@ -6,7 +6,6 @@ comment varchar(1024)
 );
 
 CREATE TABLE user (
-  name varchar(64) NOT NULL,
+  name varchar(64) NOT NULL PRIMARY KEY,
   password varchar(64) NOT NULL,
-  PRIMARY KEY (name, password)
 );
