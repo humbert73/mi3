@@ -122,7 +122,7 @@ class PhotoMatrix extends Photo
 
     private function buildImagesUrls()
     {
-        if ($this->hasCategorySelected()) {
+        if ($this->hasCategorySelected() && $this->data->image_category !== "default") {
             $images = $this->image_factory->getImagesByCategory($this->data->image_category);
         } else {
             $images = $this->image_factory->getImagesByNbImage($this->data->image_id, $this->data->nb_image);
