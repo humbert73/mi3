@@ -90,6 +90,7 @@ class Photo
 
     protected function buildMenu()
     {
+
         $index          = 'index.php';
         $controller     = '?controller='.$this->getController();
         $image_info     = $this->buildAdditionalUrlImageInfo();
@@ -155,8 +156,7 @@ class Photo
             "controller" => $this->getController(),
             "action"     => $action,
             "id"         => $this->data->image_id,
-            "size"       => $this->data->size,
-            "zoom"       => $this->data->zoom
+            "size"       => $this->data->size
         ];
 
         return 'index.php?'.http_build_query($params);

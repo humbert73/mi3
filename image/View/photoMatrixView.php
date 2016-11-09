@@ -3,7 +3,7 @@
 </div>
 <div class="panel-body">
     <div class="container">
-            <form method="post" class="form-horizontal" action="index.php?controller=PhotoMatrix&action=displayByCategory">
+            <form method="post" class="form-horizontal" action="<?php $this->getLinkForAction("displayByCategory") ?>">
                 <div class="form-group">
                     <div class="col-sm-2">
                         <select name="choiceCategory" class="form-control" id="category">

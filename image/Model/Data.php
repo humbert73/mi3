@@ -17,7 +17,6 @@ class Data
     public $image_comment;
     public $image_category;
 
-
     //IMAGE FOR URLs
     public $size     = 480;
     public $zoom     = 1;

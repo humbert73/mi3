@@ -26,17 +26,24 @@ class PhotoMatrix extends Photo
         $this->buildView();
     }
 
-    public function last()
-    {
-        $this->recupUrlData();
-        $this->data->image_id = $this->image_factory->getLastImageId($this->data->nb_image);
-        $this->buildView();
-    }
-
     public function less()
     {
         $this->recupUrlData();
         $this->data->nb_image = $this->lessNbImage($this->data->nb_image);
+        $this->buildView();
+    }
+
+    public function first()
+    {
+        $this->recupUrlData();
+        $this->data->image_id = $this->image_factory->getFirstImage()->getId();
+        $this->buildView();
+    }
+
+    public function last()
+    {
+        $this->recupUrlData();
+        $this->data->image_id = $this->image_factory->getLastImageId($this->data->nb_image);
         $this->buildView();
     }
 
