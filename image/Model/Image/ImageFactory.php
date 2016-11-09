@@ -118,9 +118,9 @@ class ImageFactory
         return $images;
     }
 
-    public function getCategory()
+    public function getCategories()
     {
-        $dar = $this->image_dao->searchCategory();
+        $dar = $this->image_dao->searchCategories();
         $categories = array();
         foreach ($dar as $row) {
             $categories[] = $row['category'];
@@ -129,8 +129,9 @@ class ImageFactory
     }
 
     // Retourne les images appartenant à une catégorie
-    public function getImageByCategory($category)
+    public function getImagesByCategory($category)
     {
+
         $res = $this->image_dao->getImageByCategory($category);
 
         while($row = $res -> fetch()){
@@ -139,7 +140,6 @@ class ImageFactory
         }
 
         return $images;
-
     }
 
     public function addImage($link, $category, $comment)
