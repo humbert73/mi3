@@ -54,7 +54,17 @@ class ImageDAO
 
     public function createImageFromRow($row)
     {
-        return new Image($row['id'], ImageFactory::URL_IMAGE_PATH.$row['path'], $row['comment'], $row['category']);
+        $path = $row['path'];
+        if (! $this->isUrl($path)) {
+            $path = ImageFactory::URL_IMAGE_PATH.$path;
+        }
+
+        return new Image($row['id'], $path, $row['comment'], $row['category']);
+    }
+
+    private function isUrl($path)
+    {
+        return strcmp(substr($path, 0, 4), 'http') === 0;
     }
 
     # Retourne la liste des images consécutives à partir d'une image
