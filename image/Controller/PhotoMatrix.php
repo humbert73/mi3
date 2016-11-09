@@ -18,7 +18,7 @@ class PhotoMatrix extends Photo
     {
         parent::__construct();
     }
-
+    
     public function more()
     {
         $this->recupUrlData();
@@ -57,7 +57,7 @@ class PhotoMatrix extends Photo
     public function displayByCategory()
     {
         $this->recupUrlData();
-        $this->data->image_id = 1;
+        $this->data->image_id = $this->image_factory->getImagesByCategory($this->data->image_category)[0]->getId();
         $this->buildView();
     }
 

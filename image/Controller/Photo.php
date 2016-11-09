@@ -142,11 +142,6 @@ class Photo
             $size             = $_GET["size"];
             $this->data->size = $size * $this->data->zoom;
         }
-//        if (isset($_GET["category"])) {
-//            $image_cat           = $_GET["category"];
-//            $this->data->image_cat  = $image_cat;
-//            $this->data->image_url = $this->image_factory->getCategory()->getImageByCategory($image_cat)->getURL();
-//        }
     }
 
     protected function includeMainView()
@@ -160,7 +155,8 @@ class Photo
             "controller" => $this->getController(),
             "action"     => $action,
             "id"         => $this->data->image_id,
-            "size"       => $this->data->size
+            "size"       => $this->data->size,
+            "zoom"       => $this->data->zoom
         ];
 
         return 'index.php?'.http_build_query($params);
