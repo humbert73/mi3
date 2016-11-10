@@ -29,9 +29,8 @@ class Data
     //HEADER
     public $header;
     public $sign_up_url;
-    public $sign_up_has_succed;
+    public $sign_up_has_succeed;
     public $log_in_url;
-    public $log_in_has_succed;
 
     //FEEDBACK
     public $success;

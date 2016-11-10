@@ -2,17 +2,17 @@
   <h2 class="panel-title">Upload</h2>
 </div>
 <div class="panel-body">
-  <div class="container">
+  <div class="container-fluid">
 <?php if (isset($this->data->upload_has_succed)) { ?>
   <div class="alert alert-success">
     <strong>Connexion réussite</strong>
   </div>
 <?php } else { ?>
-  <form class="form-horizontal" action="index.php?controller=Upload&action=upload" method="post">
+  <form class="form-horizontal" action="index.php?controller=Upload&action=upload" method="post" enctype="multipart/form-data">
       <div class="form-group">
-        <label class="col-sm-3 control-label" for="link">Chemin d'accès à l'image</label>
+        <label class="col-sm-3 control-label" for="link">Ajouter des images</label>
         <div class="col-sm-8">
-          <input name="link" type="text" class="form-control" id="link">
+            <input class="form-control" type="file" value="Téléchargez votre image" id="upload" name="upload[]" multiple/>
         </div>
       </div>
       <div class="form-group">
@@ -29,7 +29,7 @@
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-8">
-          <button type="submit" class="btn btn-default">Importer</button>
+          <button name="submitUpload" type="submit" class="btn btn-default">Importer</button>
         </div>
       </div>
     </form>

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: moreauhu
- * Date: 07/11/16
- * Time: 19:24
- */
 require_once('Controller/Home.php');
 require_once('Controller/SignUp.php');
 require_once('Controller/LogIn.php');

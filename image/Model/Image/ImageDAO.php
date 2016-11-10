@@ -87,7 +87,6 @@ class ImageDAO
 
     public function searchImagesByCategory($category)
     {
-
         $sql = "SELECT * FROM image WHERE category = '$category'";
 
         return $this->db->query($sql);

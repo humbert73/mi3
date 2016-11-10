@@ -17,7 +17,7 @@ Renseigner :
 * Un commentaire descriptif
 
 Exemple de chemin d'accès à l'image :
-Je créer un dossier `MON_NOM` dans le dossier `IMG` prévut à cet effet dans lequel je dépose l'image `image.jpg`.
+Je crée un dossier `MON_NOM` dans le dossier `IMG` prévut à cet effet dans lequel je dépose l'image `image.jpg`.
 Chemin d'accès : `MON_NOM/image.jpg`
 
 ##### En cas d'erreur de lecture avec la DB

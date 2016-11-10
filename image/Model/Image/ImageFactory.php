@@ -88,17 +88,6 @@ class ImageFactory
         return $this->image_dao->getImage($this->getPreviousImageId($id));
     }
 
-    public function jumpToImage(image $img, $nb)
-    {
-        $id     = $img->getId();
-        $nextId = $id + $nb;
-        if ($nextId >= 1 && $nextId <= $this->image_dao->size()) {
-            $img = $this->image_dao->getImage($nextId);
-        }
-
-        return $img;
-    }
-
     public function getImagesByNbImage($image_id, $nb_image)
     {
         # Verifie que le nombre d'image est non nul
@@ -131,19 +120,30 @@ class ImageFactory
     // Retourne les images appartenant à une catégorie
     public function getImagesByCategory($category)
     {
+        $dar = $this->image_dao->searchImagesByCategory($category);
+        $images = array();
 
-        $res = $this->image_dao->getImageByCategory($category);
-
-        while($row = $res -> fetch()){
-
-            $images[$row['id']] = $this->image_dao->createImageFromRow($row);
+        if ($dar) {
+            foreach ($dar as $row) {
+                $images[] = $this->image_dao->createImageFromRow($row);
+            }
+        } else {
+            print "Error in getImageByCategory category = " . $category . "<br/>";
+            $err = $this->image_dao->db->errorInfo();
+            print $err[2] . "<br/>";
         }
 
         return $images;
     }
 
+    public function getFirstImageByCategory($category){
+
+        return $this->getImagesByCategory($category)[0];
+    }
+
     public function addImage($link, $category, $comment)
     {
-        return $this->image_dao->createImage($link, $category, $comment);
+       return $this->image_dao->createImage($link, $category, $comment);
+
     }
 }

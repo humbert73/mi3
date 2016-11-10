@@ -33,7 +33,7 @@ class SignUp
     public function signUp()
     {
         if ($this->addUser()){
-            $this->data->sign_up_has_succed = true;
+            $this->data->sign_up_has_succeed = true;
         }
         $this->buildView("SignUpView.php");
     }

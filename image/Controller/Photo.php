@@ -47,8 +47,14 @@ class Photo
 
     public function first()
     {
-        $this->buildDataImage($this->image_factory->getFirstImage());
-        $this->buildView();
+        if (isset($_GET['category'])){
+            $category = $_GET['category'];
+            $this->buildDataImage($this->image_factory->getFirstImageByCategory($category));
+            $this->buildView();
+        } else {
+            $this->buildDataImage($this->image_factory->getFirstImage());
+            $this->buildView();
+        }
     }
 
     public function last()
@@ -130,19 +136,18 @@ class Photo
     protected function recupUrlData()
     {
         if (isset($_GET["id"])) {
-            $image_id = $_GET["id"];
-            $this->data->image_id = $image_id;
+            $image_id              = $_GET["id"];
+            $this->data->image_id  = $image_id;
             $this->data->image_url = $this->image_factory->getImageById($image_id)->getURL();
         }
         if (isset($_GET["zoom"])) {
-            $zoom = $_GET["zoom"];
+            $zoom             = $_GET["zoom"];
             $this->data->zoom = $zoom;
         }
         if (isset($_GET["size"])) {
-            $size = $_GET["size"];
+            $size             = $_GET["size"];
             $this->data->size = $size * $this->data->zoom;
         }
-
     }
 
     protected function includeMainView()
@@ -156,7 +161,8 @@ class Photo
             "controller" => $this->getController(),
             "action"     => $action,
             "id"         => $this->data->image_id,
-            "size"       => $this->data->size
+            "size"       => $this->data->size,
+            "zoom"       => $this->data->zoom
         ];
 
         return 'index.php?'.http_build_query($params);

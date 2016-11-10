@@ -18,42 +18,12 @@ class PhotoMatrix extends Photo
     {
         parent::__construct();
     }
-
+    
     public function more()
     {
         $this->recupUrlData();
         $this->data->nb_image = $this->moreNbImage($this->data->nb_image);
         $this->buildView();
-    }
-
-    public function displayByCategory(){
-
-        if(isset ($_POST['submitChoiceCategory'])){
-
-            if (isset ($_POST['choice_category']) && $_POST['choice_category'] != 'default'){
-
-                $category = $_POST['choice_category'];
-
-                $images     = $this->image_factory->getImageByCategory($category);
-
-                $images_url = array();
-
-                foreach ($images as $image) {
-
-                    $images_url[] = $image->getURL();
-                }
-
-                $this->images_urls = $images_url;
-
-            }
-
-            $this->data->content = "photoMatrixView.php";
-            $this->data->menu    = $this->buildMenu();
-            $this->includeMainView();
-
-        }
-
-
     }
 
     public function last()
@@ -81,6 +51,12 @@ class PhotoMatrix extends Photo
     {
         $this->recupUrlData();
         $this->data->image_id = $this->image_factory->getPreviousImageId($this->data->image_id, $this->data->nb_image);
+        $this->buildView();
+    }
+
+    public function displayByCategory()
+    {
+        $this->recupUrlData();
         $this->buildView();
     }
 
@@ -162,6 +138,7 @@ class PhotoMatrix extends Photo
     {
         $params = [
             "nbImg" => $this->data->nb_image,
+            "category"=> $this->data->image_category
         ];
 
         return parent::getLinkForAction($action).'&'.http_build_query($params);
