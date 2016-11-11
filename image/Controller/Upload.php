@@ -16,7 +16,7 @@ require_once('Controller/Header.php');
 class Upload
 {
     const CONTROLLER_NAME = 'Upload';
-    const IMAGE_DIR_NAME = 'upload/';
+    const IMAGE_DIR_NAME = '/upload/';
     const MAX_WIDTH = 600;
     const MAX_HEIGHT = 450;
     public $data;
@@ -66,17 +66,77 @@ class Upload
     private function addImage()
     {
 
-        if ($this->checkAttributes()) {
-
+        if ($this->checkAttributesImageDownload()) {
             $this->checkUpload();
-
         }
 
+        if($this->checkAttributesImageUrl()){
+            $this->checkUrl();
+        }
     }
 
-    public function checkAttributes()
+    public function checkAttributesImageDownload()
     {
         return isset($_FILES['upload']) && isset($_POST['category']) && isset($_POST['comment']) && isset($_POST['submitUpload']);
+    }
+
+    public function checkAttributesImageUrl()
+    {
+        return isset($_POST['url']) && isset($_POST['category']) && isset($_POST['comment']) && isset($_POST['submitUpload']);
+    }
+
+    public function checkUrl(){
+
+        $url = trim($_POST['url']); //retire les espaces au copier/coller
+        $category = $_POST['category'];
+        $comment = $_POST['comment'];
+        $maxsize = 200000;
+
+
+        $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/mi3/image/Model/IMG/upload/';
+
+        if(preg_match('/^(http:\/\/)?([\w\-\.]+)\:?([0-9]*)\/(.*)$/', $url, $url_ary) == 1){
+
+            $base_get = '/' . $url_ary[4];
+            $port = ( !empty($url_ary[3]) ) ? $url_ary[3] : 80;
+
+            $base_filename = substr($url_ary[4],strrpos($url_ary[4],"/")+1); // on récupère le nom de l'image
+
+            $filename = $upload_dir.$base_filename;
+
+            $fsock = fsockopen($url_ary[2], $port, $errno, $errstr);
+
+            fputs($fsock, "GET $base_get HTTP/1.1\r\n");
+            fputs($fsock, "Host: " . $url_ary[2] . "\r\n");
+            fputs($fsock, "Accept-Language: fr\r\n");
+            fputs($fsock, "Accept-Encoding: none\r\n");
+            fputs($fsock, "User-Agent: PHP\r\n");
+            fputs($fsock, "Connection: close\r\n\r\n");
+
+            unset($data);
+            while( !feof($fsock) )
+            {
+                $data = fread($fsock, $maxsize);
+            }
+            fclose($fsock);
+
+            preg_match('#Content-Length\: ([0-9]+)[^ /][\s]+#i', $data, $file_data1) || !preg_match('#Content-Type\: image/[x\-]*([a-z]+)[\s]+#i', $data, $file_data2);
+
+            $filesize = $file_data1[1];
+
+            $data = substr($data, strlen($data) - $filesize, $filesize);
+
+            $fptr = fopen($filename, 'wb');
+            fwrite($fptr, $data, $filesize);
+            fclose($fptr);
+
+                $this->insertUploadImage($base_filename, $category, $comment);
+
+                echo "<p>".$base_filename." enregistré avec succès ! </p>";
+
+        } else {
+            echo 'Vérifiez votre url';
+        }
     }
 
     public function checkUpload()
@@ -93,7 +153,7 @@ class Upload
             $error = $files ['error'][$id_image];
             $extension_autorisees = array('jpg', 'jpeg', 'png', 'gif');
             $extension = basename($type);
-            $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/mi3/image/Model/IMG/upload/';
+            $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/mi3/image/Model/IMG/upload';
 
             // test pas d'erreur
             if ($error < 1) {
@@ -107,6 +167,7 @@ class Upload
                             if ($this->moveImage($tmp_name, $upload_dir, $name)){
 
                                 $this->insertUploadImage($name,$category,$comment);
+
                             }
                         }
                     }

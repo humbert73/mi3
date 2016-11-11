@@ -13,8 +13,13 @@
         <label class="col-sm-3 control-label" for="link">Ajouter des images</label>
         <div class="col-sm-4">
             <input class="form-control" type="file" value="Téléchargez votre image" id="upload" name="upload[]" multiple/>
-            <div>extensions autorisées : .jpg, .png, .gif - taille : image 600x450px, 2Mo max</div>
-        </div>
+            </div>
+          <div class="col-sm-4">
+            <input class="form-control" name="url" type="text" placeholder="Coller ici l'URL de votre image"/>
+          </div>
+      </div>
+      <div class="form-group">
+            <p style="margin-left : 280px;">[images autorisées : .jpg, .png, .gif - taille max : 600x450px, 2Mo max]</p>
       </div>
       <div class="form-group">
         <label class="col-sm-3 control-label" for="category">Catégorie de l'image</label>

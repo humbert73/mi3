@@ -65,8 +65,8 @@ class PhotoMatrix extends Photo
         $params = array(
             'nbImg' => $this->data->nb_image
         );
-        if (isset($this->data->image_category)) {
-            $params[] = $this->data->image_category;
+        if (isset($this->data->choose_category)) {
+            $params['choose-category'] = $this->data->choose_category;
         }
         return parent::buildAdditionalUrlImageInfo().'&'.http_build_query($params);
     }
@@ -88,14 +88,19 @@ class PhotoMatrix extends Photo
     protected function recupUrlData()
     {
         parent::recupUrlData();
+
         if (isset($_GET["nbImg"])) {
             $nb_image             = $_GET["nbImg"];
             $this->data->nb_image = $nb_image;
         }
-        if (isset($_POST["choiceCategory"])) {
-            $image_category             = $_POST["choiceCategory"];
-            $this->data->image_category = $image_category;
+
+
+        if (isset($_POST["choiceCategory"]) || $_POST["choiceCategory"] != NULL) {
+            $image_category              = $_POST["choiceCategory"];
+            $this->data->choose_category = $image_category;
         }
+
+        var_dump ($_POST["choiceCategory"]);
     }
 
     private function moreNbImage($nb_image)
@@ -136,11 +141,21 @@ class PhotoMatrix extends Photo
 
     protected function getLinkForAction($action)
     {
+
+
         $params = [
-            "nbImg" => $this->data->nb_image,
-            "category"=> $this->data->image_category
+            "nbImg" => $this->data->nb_image
         ];
 
+        var_dump($params);
+
+        if (isset($this->data->choose_category)) {
+            $params['choose-category'] = $this->data->choose_category;
+        }
+
+
+
         return parent::getLinkForAction($action).'&'.http_build_query($params);
+
     }
 }
