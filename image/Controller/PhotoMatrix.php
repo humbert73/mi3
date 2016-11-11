@@ -143,5 +143,4 @@ class PhotoMatrix extends Photo
 
         return parent::getLinkForAction($action).'&'.http_build_query($params);
     }
-
 }

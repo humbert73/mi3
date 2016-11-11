@@ -6,7 +6,7 @@ class ImageFactory
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # A MODIFIER EN FONCTION DE VOTRE INSTALLATION
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    const URL_IMAGE_PATH = "http://localhost/mi3/image/Model/IMG/";
+    const URL_IMAGE_PATH = Home::PATH.'Model/IMG/';
 
     private $image_dao;
 

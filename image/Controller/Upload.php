@@ -68,48 +68,34 @@ class Upload
         if ($this->checkAttributes()) {
 
             $category = $_POST['category'];
-            $comment = $_POST['comment'];
-            $files = $_FILES['upload'];
+            $comment  = $_POST['comment'];
+            $files    = $_FILES['upload'];
 
             foreach ($files ['tmp_name'] as $key => $tmp_name) {
-
-                $name = $files ['name'][$key];
-                $type = $files ['type'][$key];
-                $error = $files ['error'][$key];
-
+                $name                 = $files ['name'][$key];
+                $type                 = $files ['type'][$key];
+                $error                = $files ['error'][$key];
                 $extension_autorisees = array(
                     'jpg',
                     'jpeg',
                     'png'
                 );
-
-                $extension = basename($type);
-
+                $extension            = basename($type);
                 // test pas d'erreur
                 if ($error < 1) {
-
                     //test extension
                     if (in_array($extension, $extension_autorisees)) {
                         //test dimensions images
                         $images_size = getimagesize($tmp_name);
-
                         if (($images_size[0] <= ($this::MAX_WIDTH)) AND ($images_size[1] <= ($this::MAX_HEIGHT))) {
-
                             $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/mi3/image/Model/IMG/upload/';
-
                             //creation du répertoire upload s'il n'existe pas
                             if (is_dir($upload_dir) === false) {
-
                                 mkdir($upload_dir);
-
                             }
-
                             $moveImage = move_uploaded_file($tmp_name, $upload_dir . $name);
-
                             if ($moveImage === true) {
-
                                 $insertImage = $this->image_factory->addImage(self::IMAGE_DIR_NAME . $name, $category, $comment);
-
                                 if ($insertImage === true) {
                                     echo 'Image insérée';
                                     continue;

@@ -6,4 +6,3 @@
     <p>Cette application vous permet de manipuler des photos</p>
     <p>Vous pouvez : naviguer, partager, classer en album</p>
 </div>
-
