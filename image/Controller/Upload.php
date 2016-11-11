@@ -16,7 +16,7 @@ require_once('Controller/Header.php');
 class Upload
 {
     const CONTROLLER_NAME = 'Upload';
-    const IMAGE_DIR_NAME = 'upload/';
+    const IMAGE_DIR_NAME = '/upload/';
     const MAX_WIDTH = 600;
     const MAX_HEIGHT = 450;
     public $data;
