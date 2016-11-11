@@ -5,7 +5,7 @@ Dans `/image/Controller/Home.php`
 ```PHP
 const PATH = "http://MON_ADRESSE_URL/image/"
 ```
-exemple : `const URL_IMAGE_PATH = "http://localhost/image/"`
+exemple : `const PATH = "http://localhost/image/"`
 
 ##### Pour ajouter de nouvelles photos
 Pour avoir la possibilité d'importer de nouvelles photos, il faut être connecté.
