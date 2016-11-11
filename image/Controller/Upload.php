@@ -26,8 +26,8 @@ class Upload
 
     public function __construct()
     {
-        $this->data          = new Data();
-        $this->header        = new Header($this->data);
+        $this->data = new Data();
+        $this->header = new Header($this->data);
         $this->image_factory = new ImageFactory(new ImageDAO());
     }
 
@@ -45,7 +45,7 @@ class Upload
     public function buildView($name_view)
     {
         $this->data->content = $name_view;
-        $this->data->menu    = $this->buildMenu();
+        $this->data->menu = $this->buildMenu();
         $this->includeMainView();
     }
 
@@ -57,8 +57,8 @@ class Upload
     private function buildMenu()
     {
         return array(
-            'Home'        => 'index.php',
-            'A propos'    => 'index.php?action=apropos',
+            'Home' => 'index.php',
+            'A propos' => 'index.php?action=apropos',
             'Voir photos' => 'index.php?id=1&controller=Photo'
         );
     }
@@ -68,19 +68,15 @@ class Upload
         if ($this->checkAttributes()) {
 
             $category = $_POST['category'];
-            $comment  = $_POST['comment'];
-            $files    = $_FILES['upload'];
+            $comment = $_POST['comment'];
+            $files = $_FILES['upload'];
 
             foreach ($files ['tmp_name'] as $key => $tmp_name) {
-                $name                 = $files ['name'][$key];
-                $type                 = $files ['type'][$key];
-                $error                = $files ['error'][$key];
-                $extension_autorisees = array(
-                    'jpg',
-                    'jpeg',
-                    'png'
-                );
-                $extension            = basename($type);
+                $name = $files ['name'][$key];
+                $type = $files ['type'][$key];
+                $error = $files ['error'][$key];
+                $extension_autorisees = array('jpg', 'jpeg', 'png');
+                $extension = basename($type);
                 // test pas d'erreur
                 if ($error < 1) {
                     //test extension

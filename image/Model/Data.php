@@ -25,6 +25,7 @@ class Data
     public $images_urls;
     public $image_cat;
     public $categories;
+    public $choose_category;
 
     //HEADER
     public $header;

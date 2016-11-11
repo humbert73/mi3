@@ -65,8 +65,8 @@ class PhotoMatrix extends Photo
         $params = array(
             'nbImg' => $this->data->nb_image
         );
-        if (isset($this->data->image_category)) {
-            $params[] = $this->data->image_category;
+        if (isset($this->data->choose_category)) {
+            $params['choose-category'] = $this->data->choose_category;
         }
         return parent::buildAdditionalUrlImageInfo().'&'.http_build_query($params);
     }
@@ -93,8 +93,8 @@ class PhotoMatrix extends Photo
             $this->data->nb_image = $nb_image;
         }
         if (isset($_POST["choiceCategory"])) {
-            $image_category             = $_POST["choiceCategory"];
-            $this->data->image_category = $image_category;
+            $image_category              = $_POST["choiceCategory"];
+            $this->data->choose_category = $image_category;
         }
     }
 
@@ -137,9 +137,12 @@ class PhotoMatrix extends Photo
     protected function getLinkForAction($action)
     {
         $params = [
-            "nbImg" => $this->data->nb_image,
-            "category"=> $this->data->image_category
+            "nbImg" => $this->data->nb_image
         ];
+
+        if (isset($this->data->choose_category)) {
+            $params['choose-category'] = $this->data->choose_category;
+        }
 
         return parent::getLinkForAction($action).'&'.http_build_query($params);
     }

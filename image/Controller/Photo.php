@@ -129,6 +129,9 @@ class Photo
         if (isset($this->data->image_category)) {
             $params['category'] = $this->data->image_category;
         }
+        if (isset($this->data->image_comment)) {
+            $params['comment'] = $this->data->image_comment;
+        }
 
         return '&'.http_build_query($params);
     }
@@ -148,6 +151,14 @@ class Photo
             $size             = $_GET["size"];
             $this->data->size = $size * $this->data->zoom;
         }
+        if (isset($_GET["category"])) {
+            $category         = $_GET["category"];
+            $this->data->image_category = $category;
+        }
+        if (isset($_GET["comment"])) {
+            $comment            = $_GET["comment"];
+            $this->data->image_comment = $comment;
+        }
     }
 
     protected function includeMainView()
@@ -161,7 +172,9 @@ class Photo
             "controller" => $this->getController(),
             "action"     => $action,
             "id"         => $this->data->image_id,
-            "size"       => $this->data->size
+            "size"       => $this->data->size,
+            "category"   => $this->data->image_category,
+            "comment"    => $this->data->image_comment
         ];
 
         return 'index.php?'.http_build_query($params);

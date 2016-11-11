@@ -2,7 +2,7 @@
     <h2 class="panel-title">Galerie photos Matrix</h2>
 </div>
 <div class="panel-body">
-    <div class="container">
+    <div class="container-fluid">
             <form method="post" class="form-horizontal" action="<?php $this->getLinkForAction("displayByCategory") ?>">
                 <div class="form-group">
                     <div class="col-sm-2">
