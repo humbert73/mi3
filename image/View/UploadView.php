@@ -11,8 +11,9 @@
   <form class="form-horizontal" action="index.php?controller=Upload&action=upload" method="post" enctype="multipart/form-data">
       <div class="form-group">
         <label class="col-sm-3 control-label" for="link">Ajouter des images</label>
-        <div class="col-sm-8">
+        <div class="col-sm-4">
             <input class="form-control" type="file" value="Téléchargez votre image" id="upload" name="upload[]" multiple/>
+            <div>extensions autorisées : .jpg, .png, .gif - taille : image 600x450px, 2Mo max</div>
         </div>
       </div>
       <div class="form-group">

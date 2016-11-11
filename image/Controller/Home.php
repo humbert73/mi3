@@ -7,7 +7,7 @@ require_once('Controller/Header.php');
 class Home
 {
 
-    const PATH = "http://localhost:63342/image/";
+    const PATH = "http://localhost/mi3/image/";
     const URL_PATH = self::PATH.'index.php';
     public $data;
     public $header;
