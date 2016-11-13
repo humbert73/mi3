@@ -47,14 +47,8 @@ class Photo
 
     public function first()
     {
-        if (isset($_GET['category'])){
-            $category = $_GET['category'];
-            $this->buildDataImage($this->image_factory->getFirstImageByCategory($category));
-            $this->buildView();
-        } else {
-            $this->buildDataImage($this->image_factory->getFirstImage());
-            $this->buildView();
-        }
+        $this->buildDataImage($this->image_factory->getFirstImage());
+        $this->buildView();
     }
 
     public function last()
@@ -79,7 +73,6 @@ class Photo
 
     protected function buildDataImage(Image $image)
     {
-        $this->recupUrlData();
         $this->data->image_url      = $image->getURL();
         $this->data->image_id       = $image->getId();
         $this->data->image_comment  = $image->getComment();
@@ -151,14 +144,14 @@ class Photo
             $size             = $_GET["size"];
             $this->data->size = $size * $this->data->zoom;
         }
-        /*if (isset($_GET["category"])) {
+        if (isset($_GET["category"])) {
             $category         = $_GET["category"];
             $this->data->image_category = $category;
         }
         if (isset($_GET["comment"])) {
             $comment            = $_GET["comment"];
             $this->data->image_comment = $comment;
-        }*/
+        }
     }
 
     protected function includeMainView()

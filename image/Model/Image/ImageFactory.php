@@ -6,7 +6,7 @@ class ImageFactory
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # A MODIFIER EN FONCTION DE VOTRE INSTALLATION
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    const URL_IMAGE_PATH = Home::PATH.'Model/IMG/';
+    const URL_IMAGE_PATH = Home::MY_PATH . '/Model/IMG/';
 
     private $image_dao;
 
@@ -39,7 +39,7 @@ class ImageFactory
 
     public function getLastImageId($nb_image = 1)
     {
-        return $this->getLastId()-$nb_image+1;
+        return $this->getLastId() - $nb_image + 1;
     }
 
     private function getFirstId()
@@ -57,13 +57,13 @@ class ImageFactory
         if ($id + $nb_image <= $this->image_dao->size()) {
             $id += $nb_image;
         } else {
-            $id = $this->image_dao->size()-$nb_image+1;
+            $id = $this->image_dao->size() - $nb_image + 1;
         }
 
         return $id;
     }
 
-    public function getPreviousImageId($id, $nb_image = 1)
+    private function getPreviousImageId($id, $nb_image = 1)
     {
         if ($id - $nb_image >= 1) {
             $id -= $nb_image;
@@ -75,17 +75,29 @@ class ImageFactory
     /**
      * @return Image
      */
-    public function getNextImageById($id)
+    public function getNextImageById($id, $nb_image = 0)
     {
-        return $this->image_dao->getImage($this->getNextImageId($id));
+        if ($nb_image === 0) {
+            $id = $this->getNextImageId($id);
+        } else {
+            $id = $this->getNextImageId($id, $nb_image);
+        }
+
+        return $this->image_dao->getImage($id);
     }
 
     /**
      * @return Image
      */
-    public function getPreviousImageById($id)
+    public function getPreviousImageById($id, $nb_image = 0)
     {
-        return $this->image_dao->getImage($this->getPreviousImageId($id));
+        if ($nb_image === 0) {
+            $id = $this->getPreviousImageId($id);
+        } else {
+            $id = $this->getPreviousImageId($id, $nb_image);
+        }
+
+        return $this->image_dao->getImage($id);
     }
 
     public function getImagesByNbImage($image_id, $nb_image)
@@ -107,25 +119,16 @@ class ImageFactory
         return $images;
     }
 
-    public function getCategories()
-    {
-        $dar = $this->image_dao->searchCategories();
-        $categories = array();
-        foreach ($dar as $row) {
-            $categories[] = $row['category'];
-        }
-        return $categories;
-    }
-
     // Retourne les images appartenant à une catégorie
-    public function getImagesByCategory($category)
+    public function getImagesByCategory($category, $nb_image = 1)
     {
-        $dar = $this->image_dao->searchImagesByCategory($category);
-        $images = array();
+        $dar                = $this->image_dao->searchImagesByCategory($category);
+        $images_by_category = array();
+        $images             = array();
 
         if ($dar) {
             foreach ($dar as $row) {
-                $images[] = $this->image_dao->createImageFromRow($row);
+                $images_by_category[] = $this->image_dao->createImageFromRow($row);
             }
         } else {
             print "Error in getImageByCategory category = " . $category . "<br/>";
@@ -133,17 +136,41 @@ class ImageFactory
             print $err[2] . "<br/>";
         }
 
+        $size = sizeof($images_by_category);
+
+        for ($i = 0; $i <= $size - 1 && $i < $nb_image; $i++) {
+            $images[] = $this->image_dao->getImage($images_by_category[$i]->getId());
+        }
+
         return $images;
     }
 
-    public function getFirstImageByCategory($category){
+    public function getCategories()
+    {
+        $dar        = $this->image_dao->searchCategories();
+        $categories = array();
+        foreach ($dar as $row) {
+            $categories[] = $row['category'];
+        }
 
-        return $this->getImagesByCategory($category)[0];
+        return $categories;
+    }
+
+    public function getFirstImageByCategory($category, $nb_image)
+    {
+        return $this->getImagesByCategory($category, $nb_image)[0];
+    }
+
+    public function getLastImageByCategory($category, $nb_image)
+    {
+        $images = $this->getImagesByCategory($category, $nb_image);
+
+        return $images[sizeof($images) - $nb_image];
     }
 
     public function addImage($link, $category, $comment)
     {
-       return $this->image_dao->createImage($link, $category, $comment);
+        return $this->image_dao->createImage($link, $category, $comment);
 
     }
 }

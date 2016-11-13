@@ -31,11 +31,11 @@ class Header
 
     private function getSignUpUrl()
     {
-        return Home::URL_PATH.'?'.http_build_query(array('controller' => SignUp::CONTROLLER_NAME));
+        return Home::URL_PATH_INDEX.'?'.http_build_query(array('controller' => SignUp::CONTROLLER_NAME));
     }
 
     private function getLogInUrl()
     {
-        return Home::URL_PATH.'?'.http_build_query(array('controller' => LogIn::CONTROLLER_NAME));
+        return Home::URL_PATH_INDEX.'?'.http_build_query(array('controller' => LogIn::CONTROLLER_NAME));
     }
 }

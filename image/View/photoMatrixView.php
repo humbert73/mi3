@@ -7,9 +7,18 @@
                 <div class="form-group">
                     <div class="col-sm-2">
                         <select name="choiceCategory" class="form-control" id="category">
-                            <option value="default" selected>Choose category</option>
-                            <?php foreach ($this->data->categories as $category) {
-                                echo '<option value="'.$category.'">'.$category.'</option>';
+                            <?php
+                            if (isset($this->data->choose_category)) {
+                                $category = $this->data->choose_category;
+                            } else {
+                                $category = $this->data->image_category;
+                            }
+                            echo '<option value="'.$category.'" selected>'.$category.'</option>';
+
+                            foreach ($this->data->categories as $category) {
+                                if ($category != $this->data->image_category) { //ajoute toutes les catégories sauf celle qui est selectionnée
+                                    echo '<option value="' . $category . '">' . $category . '</option>';
+                                }
                             } ?>
                         </select>
                     </div>
