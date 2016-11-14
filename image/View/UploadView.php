@@ -2,12 +2,6 @@
   <h2 class="panel-title">Upload</h2>
 </div>
 <div class="panel-body">
-  <div class="container-fluid">
-<?php if (isset($this->data->upload_has_succed)) { ?>
-  <div class="alert alert-success">
-    <strong>Connexion réussite</strong>
-  </div>
-<?php } else { ?>
   <form class="form-horizontal" action="index.php?controller=Upload&action=upload" method="post" enctype="multipart/form-data">
       <div class="form-group">
         <label class="col-sm-3 control-label" for="link">Ajouter des images</label>
@@ -39,6 +33,5 @@
         </div>
       </div>
     </form>
-<?php } ?>
   </div>
 </div>

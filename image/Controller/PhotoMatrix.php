@@ -119,7 +119,7 @@ class PhotoMatrix extends Photo
 
     private function buildFirstImageId()
     {
-        if (isset($_GET['choose-category'])) {
+        if (!empty($_GET['choose-category'])) {
             $category             = $_GET['choose-category'];
             $image = $this->image_factory->getFirstImageByCategory($category, $this->data->nb_image);
         } else {
@@ -130,7 +130,7 @@ class PhotoMatrix extends Photo
 
     private function buildLastImageId()
     {
-        if (isset($_GET['choose-category'])) {
+        if (!empty($_GET['choose-category'])) {
             $category             = $_GET['choose-category'];
             $this->data->image_id = $this->image_factory->getLastImageByCategory($category, $this->data->nb_image)->getId();
         } else {
@@ -142,15 +142,15 @@ class PhotoMatrix extends Photo
     {
         parent::recupUrlData();
 
-        if (isset($_GET["nbImg"])) {
+        if (!empty($_GET["nbImg"])) {
             $this->data->nb_image = $_GET["nbImg"];
         }
-        if (isset($_GET['choose-category'])) {
-//            $this->data->choose_category = $_GET['choose-category'];
-            $this->data->nb_image = sizeof($this->image_factory->getImagesByCategory($_GET['choose-category']));
+        if (!empty($_GET['choose-category'])) {
+           $this->data->choose_category = $_GET['choose-category'];
+           // $this->data->nb_image = sizeof($this->image_factory->getImagesByCategory($_GET['choose-category']));
         }
 
-        if (isset($_POST["choiceCategory"])) {
+        if (!empty($_POST["choiceCategory"])) {
             $this->data->choose_category = $_POST["choiceCategory"];
         }
 

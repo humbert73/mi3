@@ -23,7 +23,6 @@ class Upload
     public  $header;
     private $image_factory;
 
-
     public function __construct()
     {
         $this->data          = new Data();
@@ -65,23 +64,24 @@ class Upload
 
     private function addImage()
     {
+
         if ($this->checkAttributesImageDownload()) {
             $this->checkUpload();
-        }
-
-        if ($this->checkAttributesImageUrl()) {
+        } else if ($this->checkAttributesImageUrl()) {
             $this->checkUrl();
+        }else {
+            echo 'Veuillez remplir tous les champs SVP';
         }
     }
 
     private function checkAttributesImageDownload()
     {
-        return isset($_FILES['upload']) && isset($_POST['category']) && isset($_POST['comment']) && isset($_POST['submitUpload']);
+        return (($_FILES['upload']['error'][0]) != 4 && !empty($_POST['category']) && !empty($_POST['comment']) && isset($_POST['submitUpload']));
     }
 
     private function checkAttributesImageUrl()
     {
-        return isset($_POST['url']) && isset($_POST['category']) && isset($_POST['comment']) && isset($_POST['submitUpload']);
+        return (!empty($_POST['url'])) && !empty($_POST['category']) && !empty($_POST['comment']) && !empty($_POST['submitUpload']);
     }
 
     private function checkUrl()
@@ -170,12 +170,25 @@ class Upload
     {
         //creation du répertoire upload s'il n'existe pas
         if (is_dir($upload_dir) === true) {
-            /*mkdir($upload_dir);*/
+            
             return true;
+            
         } else {
-            echo 'L\'image n\'a pas pu être téléchargée.';
-        }
+			
+            mkdir($upload_dir);
+            
+				if (is_dir($upload_dir) === true){
+				
+					return true;
+					
+				} else {
+
+                    echo 'Le répertoire n\'a pas pu être créé';
+					
+				}
     }
+    
+}
 
     private function moveImage($tmp_name, $upload_dir, $name)
     {
@@ -184,7 +197,7 @@ class Upload
         if ($moveImage === true) {
             return true;
         } else {
-            echo 'L\'image n\'a pas pu être enregistrée sur le serveur.';
+           echo 'L\'image n\'a pas pu être enregistrée sur le serveur.';
         }
     }
 
@@ -194,7 +207,7 @@ class Upload
         $insertImage = $this->image_factory->addImage(self::IMAGE_DIR_NAME . $name, $category, $comment);
 
         if ($insertImage === true) {
-            echo 'Image insérée';
+          echo 'Image insérée ';
         } else {
             echo 'L\'image n\'a pas pu être enregistrée dans la base.';
         }

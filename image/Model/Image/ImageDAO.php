@@ -80,7 +80,7 @@ class ImageDAO
 
     public function searchCategories()
     {
-        $sql = "SELECT DISTINCT(category) FROM image ";
+        $sql = "SELECT DISTINCT(category) FROM image ORDER BY UPPER(category)";
 
         return $this->db->query($sql);
     }
